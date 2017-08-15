@@ -33,11 +33,11 @@
 		113D8C941F2FC09100A03AA7 /* UIButton+DecisionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C931F2FC09100A03AA7 /* UIButton+DecisionButton.swift */; };
 		113D8C961F30D15200A03AA7 /* DeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C951F30D15200A03AA7 /* DeliveryViewController.swift */; };
 		113DB41E1F3FEC210038FEB5 /* MeetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113DB41D1F3FEC210038FEB5 /* MeetingViewController.swift */; };
+		113F378B1F435940006E4E4D /* API_KEY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113F378A1F435940006E4E4D /* API_KEY.swift */; };
 		11679D601F3CD82300E47F90 /* Attachment+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11679D5F1F3CD82300E47F90 /* Attachment+Extensions.swift */; };
 		119EBDCF1F325A95002854D6 /* DeliveryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119EBDCE1F325A95002854D6 /* DeliveryTableViewCell.swift */; };
 		11EDFAC01F38DDD60040E312 /* User+Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFABF1F38DDD60040E312 /* User+Sets.swift */; };
 		11EDFAC21F393EDA0040E312 /* ChannelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFAC11F393EDA0040E312 /* ChannelStore.swift */; };
-		11EDFAC41F3940320040E312 /* API_KEY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFAC31F3940320040E312 /* API_KEY.swift */; };
 		11F4C59C1F3F64BD00119141 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F4C59B1F3F64BD00119141 /* MeetingTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,11 +104,11 @@
 		113D8C931F2FC09100A03AA7 /* UIButton+DecisionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIButton+DecisionButton.swift"; path = "../UIButton+DecisionButton.swift"; sourceTree = "<group>"; };
 		113D8C951F30D15200A03AA7 /* DeliveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryViewController.swift; sourceTree = "<group>"; };
 		113DB41D1F3FEC210038FEB5 /* MeetingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingViewController.swift; sourceTree = "<group>"; };
+		113F378A1F435940006E4E4D /* API_KEY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API_KEY.swift; sourceTree = "<group>"; };
 		11679D5F1F3CD82300E47F90 /* Attachment+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Attachment+Extensions.swift"; sourceTree = "<group>"; };
 		119EBDCE1F325A95002854D6 /* DeliveryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTableViewCell.swift; sourceTree = "<group>"; };
 		11EDFABF1F38DDD60040E312 /* User+Sets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Sets.swift"; sourceTree = "<group>"; };
 		11EDFAC11F393EDA0040E312 /* ChannelStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelStore.swift; sourceTree = "<group>"; };
-		11EDFAC31F3940320040E312 /* API_KEY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API_KEY.swift; sourceTree = "<group>"; };
 		11F4C59B1F3F64BD00119141 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,7 +176,7 @@
 		113D8C471F2F8C3E00A03AA7 /* SlackBotTestApp */ = {
 			isa = PBXGroup;
 			children = (
-				11EDFAC31F3940320040E312 /* API_KEY.swift */,
+				113F378A1F435940006E4E4D /* API_KEY.swift */,
 				113D8C481F2F8C3E00A03AA7 /* AppDelegate.swift */,
 				11EDFAC11F393EDA0040E312 /* ChannelStore.swift */,
 				113D8C911F2FB09E00A03AA7 /* DecisionViewController.swift */,
@@ -350,11 +350,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				113D8C921F2FB09E00A03AA7 /* DecisionViewController.swift in Sources */,
+				113F378B1F435940006E4E4D /* API_KEY.swift in Sources */,
 				11679D601F3CD82300E47F90 /* Attachment+Extensions.swift in Sources */,
 				113DB41E1F3FEC210038FEB5 /* MeetingViewController.swift in Sources */,
 				113D8C941F2FC09100A03AA7 /* UIButton+DecisionButton.swift in Sources */,
 				113D8C961F30D15200A03AA7 /* DeliveryViewController.swift in Sources */,
-				11EDFAC41F3940320040E312 /* API_KEY.swift in Sources */,
 				11EDFAC21F393EDA0040E312 /* ChannelStore.swift in Sources */,
 				113D8C491F2F8C3E00A03AA7 /* AppDelegate.swift in Sources */,
 				11F4C59C1F3F64BD00119141 /* MeetingTableViewCell.swift in Sources */,
