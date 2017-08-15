@@ -1,0 +1,644 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		113D8C491F2F8C3E00A03AA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C481F2F8C3E00A03AA7 /* AppDelegate.swift */; };
+		113D8C4E1F2F8C3E00A03AA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 113D8C4C1F2F8C3E00A03AA7 /* Main.storyboard */; };
+		113D8C501F2F8C3E00A03AA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 113D8C4F1F2F8C3E00A03AA7 /* Assets.xcassets */; };
+		113D8C531F2F8C3E00A03AA7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 113D8C511F2F8C3E00A03AA7 /* LaunchScreen.storyboard */; };
+		113D8C5E1F2F8C3E00A03AA7 /* SlackBotTestAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C5D1F2F8C3E00A03AA7 /* SlackBotTestAppTests.swift */; };
+		113D8C691F2F8C3E00A03AA7 /* SlackBotTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C681F2F8C3E00A03AA7 /* SlackBotTestAppUITests.swift */; };
+		113D8C7E1F2F97CA00A03AA7 /* SKClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C761F2F97CA00A03AA7 /* SKClient.framework */; };
+		113D8C7F1F2F97CA00A03AA7 /* SKClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C761F2F97CA00A03AA7 /* SKClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		113D8C801F2F97CA00A03AA7 /* SKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C771F2F97CA00A03AA7 /* SKCore.framework */; };
+		113D8C811F2F97CA00A03AA7 /* SKCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C771F2F97CA00A03AA7 /* SKCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		113D8C821F2F97CA00A03AA7 /* SKRTMAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C781F2F97CA00A03AA7 /* SKRTMAPI.framework */; };
+		113D8C831F2F97CA00A03AA7 /* SKRTMAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C781F2F97CA00A03AA7 /* SKRTMAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		113D8C841F2F97CA00A03AA7 /* SKServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C791F2F97CA00A03AA7 /* SKServer.framework */; };
+		113D8C851F2F97CA00A03AA7 /* SKServer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C791F2F97CA00A03AA7 /* SKServer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		113D8C861F2F97CA00A03AA7 /* SKWebAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C7A1F2F97CA00A03AA7 /* SKWebAPI.framework */; };
+		113D8C871F2F97CA00A03AA7 /* SKWebAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C7A1F2F97CA00A03AA7 /* SKWebAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		113D8C881F2F97CA00A03AA7 /* SlackKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C7B1F2F97CA00A03AA7 /* SlackKit.framework */; };
+		113D8C891F2F97CA00A03AA7 /* SlackKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C7B1F2F97CA00A03AA7 /* SlackKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		113D8C8A1F2F97CA00A03AA7 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C7C1F2F97CA00A03AA7 /* Starscream.framework */; };
+		113D8C8B1F2F97CA00A03AA7 /* Starscream.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C7C1F2F97CA00A03AA7 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		113D8C8C1F2F97CA00A03AA7 /* Swifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C7D1F2F97CA00A03AA7 /* Swifter.framework */; };
+		113D8C8D1F2F97CA00A03AA7 /* Swifter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 113D8C7D1F2F97CA00A03AA7 /* Swifter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		113D8C921F2FB09E00A03AA7 /* DecisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C911F2FB09E00A03AA7 /* DecisionViewController.swift */; };
+		113D8C941F2FC09100A03AA7 /* UIButton+DecisionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C931F2FC09100A03AA7 /* UIButton+DecisionButton.swift */; };
+		113D8C961F30D15200A03AA7 /* DeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C951F30D15200A03AA7 /* DeliveryViewController.swift */; };
+		113DB41E1F3FEC210038FEB5 /* MeetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113DB41D1F3FEC210038FEB5 /* MeetingViewController.swift */; };
+		11679D601F3CD82300E47F90 /* Attachment+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11679D5F1F3CD82300E47F90 /* Attachment+Extensions.swift */; };
+		119EBDCF1F325A95002854D6 /* DeliveryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119EBDCE1F325A95002854D6 /* DeliveryTableViewCell.swift */; };
+		11EDFAC01F38DDD60040E312 /* User+Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFABF1F38DDD60040E312 /* User+Sets.swift */; };
+		11EDFAC21F393EDA0040E312 /* ChannelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFAC11F393EDA0040E312 /* ChannelStore.swift */; };
+		11EDFAC41F3940320040E312 /* API_KEY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFAC31F3940320040E312 /* API_KEY.swift */; };
+		11F4C59C1F3F64BD00119141 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F4C59B1F3F64BD00119141 /* MeetingTableViewCell.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		113D8C5A1F2F8C3E00A03AA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 113D8C3D1F2F8C3E00A03AA7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 113D8C441F2F8C3E00A03AA7;
+			remoteInfo = SlackBotTestApp;
+		};
+		113D8C651F2F8C3E00A03AA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 113D8C3D1F2F8C3E00A03AA7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 113D8C441F2F8C3E00A03AA7;
+			remoteInfo = SlackBotTestApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		113D8C8E1F2F97CA00A03AA7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				113D8C831F2F97CA00A03AA7 /* SKRTMAPI.framework in Embed Frameworks */,
+				113D8C8D1F2F97CA00A03AA7 /* Swifter.framework in Embed Frameworks */,
+				113D8C8B1F2F97CA00A03AA7 /* Starscream.framework in Embed Frameworks */,
+				113D8C7F1F2F97CA00A03AA7 /* SKClient.framework in Embed Frameworks */,
+				113D8C891F2F97CA00A03AA7 /* SlackKit.framework in Embed Frameworks */,
+				113D8C871F2F97CA00A03AA7 /* SKWebAPI.framework in Embed Frameworks */,
+				113D8C811F2F97CA00A03AA7 /* SKCore.framework in Embed Frameworks */,
+				113D8C851F2F97CA00A03AA7 /* SKServer.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		113D8C451F2F8C3E00A03AA7 /* SlackBotTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlackBotTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		113D8C481F2F8C3E00A03AA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		113D8C4D1F2F8C3E00A03AA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		113D8C4F1F2F8C3E00A03AA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		113D8C521F2F8C3E00A03AA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		113D8C541F2F8C3E00A03AA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		113D8C591F2F8C3E00A03AA7 /* SlackBotTestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlackBotTestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		113D8C5D1F2F8C3E00A03AA7 /* SlackBotTestAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlackBotTestAppTests.swift; sourceTree = "<group>"; };
+		113D8C5F1F2F8C3E00A03AA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		113D8C641F2F8C3E00A03AA7 /* SlackBotTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlackBotTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		113D8C681F2F8C3E00A03AA7 /* SlackBotTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlackBotTestAppUITests.swift; sourceTree = "<group>"; };
+		113D8C6A1F2F8C3E00A03AA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		113D8C761F2F97CA00A03AA7 /* SKClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SKClient.framework; path = Carthage/Build/iOS/SKClient.framework; sourceTree = "<group>"; };
+		113D8C771F2F97CA00A03AA7 /* SKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SKCore.framework; path = Carthage/Build/iOS/SKCore.framework; sourceTree = "<group>"; };
+		113D8C781F2F97CA00A03AA7 /* SKRTMAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SKRTMAPI.framework; path = Carthage/Build/iOS/SKRTMAPI.framework; sourceTree = "<group>"; };
+		113D8C791F2F97CA00A03AA7 /* SKServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SKServer.framework; path = Carthage/Build/iOS/SKServer.framework; sourceTree = "<group>"; };
+		113D8C7A1F2F97CA00A03AA7 /* SKWebAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SKWebAPI.framework; path = Carthage/Build/iOS/SKWebAPI.framework; sourceTree = "<group>"; };
+		113D8C7B1F2F97CA00A03AA7 /* SlackKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SlackKit.framework; path = Carthage/Build/iOS/SlackKit.framework; sourceTree = "<group>"; };
+		113D8C7C1F2F97CA00A03AA7 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
+		113D8C7D1F2F97CA00A03AA7 /* Swifter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swifter.framework; path = Carthage/Build/iOS/Swifter.framework; sourceTree = "<group>"; };
+		113D8C911F2FB09E00A03AA7 /* DecisionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecisionViewController.swift; sourceTree = "<group>"; };
+		113D8C931F2FC09100A03AA7 /* UIButton+DecisionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIButton+DecisionButton.swift"; path = "../UIButton+DecisionButton.swift"; sourceTree = "<group>"; };
+		113D8C951F30D15200A03AA7 /* DeliveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryViewController.swift; sourceTree = "<group>"; };
+		113DB41D1F3FEC210038FEB5 /* MeetingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingViewController.swift; sourceTree = "<group>"; };
+		11679D5F1F3CD82300E47F90 /* Attachment+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Attachment+Extensions.swift"; sourceTree = "<group>"; };
+		119EBDCE1F325A95002854D6 /* DeliveryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTableViewCell.swift; sourceTree = "<group>"; };
+		11EDFABF1F38DDD60040E312 /* User+Sets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Sets.swift"; sourceTree = "<group>"; };
+		11EDFAC11F393EDA0040E312 /* ChannelStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelStore.swift; sourceTree = "<group>"; };
+		11EDFAC31F3940320040E312 /* API_KEY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API_KEY.swift; sourceTree = "<group>"; };
+		11F4C59B1F3F64BD00119141 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		113D8C421F2F8C3E00A03AA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				113D8C821F2F97CA00A03AA7 /* SKRTMAPI.framework in Frameworks */,
+				113D8C8C1F2F97CA00A03AA7 /* Swifter.framework in Frameworks */,
+				113D8C8A1F2F97CA00A03AA7 /* Starscream.framework in Frameworks */,
+				113D8C7E1F2F97CA00A03AA7 /* SKClient.framework in Frameworks */,
+				113D8C881F2F97CA00A03AA7 /* SlackKit.framework in Frameworks */,
+				113D8C861F2F97CA00A03AA7 /* SKWebAPI.framework in Frameworks */,
+				113D8C801F2F97CA00A03AA7 /* SKCore.framework in Frameworks */,
+				113D8C841F2F97CA00A03AA7 /* SKServer.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		113D8C561F2F8C3E00A03AA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		113D8C611F2F8C3E00A03AA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		113D8C3C1F2F8C3E00A03AA7 = {
+			isa = PBXGroup;
+			children = (
+				113D8C471F2F8C3E00A03AA7 /* SlackBotTestApp */,
+				113D8C5C1F2F8C3E00A03AA7 /* SlackBotTestAppTests */,
+				113D8C671F2F8C3E00A03AA7 /* SlackBotTestAppUITests */,
+				113D8C461F2F8C3E00A03AA7 /* Products */,
+				113D8C761F2F97CA00A03AA7 /* SKClient.framework */,
+				113D8C771F2F97CA00A03AA7 /* SKCore.framework */,
+				113D8C781F2F97CA00A03AA7 /* SKRTMAPI.framework */,
+				113D8C791F2F97CA00A03AA7 /* SKServer.framework */,
+				113D8C7A1F2F97CA00A03AA7 /* SKWebAPI.framework */,
+				113D8C7B1F2F97CA00A03AA7 /* SlackKit.framework */,
+				113D8C7C1F2F97CA00A03AA7 /* Starscream.framework */,
+				113D8C7D1F2F97CA00A03AA7 /* Swifter.framework */,
+			);
+			sourceTree = "<group>";
+		};
+		113D8C461F2F8C3E00A03AA7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				113D8C451F2F8C3E00A03AA7 /* SlackBotTestApp.app */,
+				113D8C591F2F8C3E00A03AA7 /* SlackBotTestAppTests.xctest */,
+				113D8C641F2F8C3E00A03AA7 /* SlackBotTestAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		113D8C471F2F8C3E00A03AA7 /* SlackBotTestApp */ = {
+			isa = PBXGroup;
+			children = (
+				11EDFAC31F3940320040E312 /* API_KEY.swift */,
+				113D8C481F2F8C3E00A03AA7 /* AppDelegate.swift */,
+				11EDFAC11F393EDA0040E312 /* ChannelStore.swift */,
+				113D8C911F2FB09E00A03AA7 /* DecisionViewController.swift */,
+				119EBDCE1F325A95002854D6 /* DeliveryTableViewCell.swift */,
+				113D8C951F30D15200A03AA7 /* DeliveryViewController.swift */,
+				11F4C59B1F3F64BD00119141 /* MeetingTableViewCell.swift */,
+				113DB41D1F3FEC210038FEB5 /* MeetingViewController.swift */,
+				11679D5F1F3CD82300E47F90 /* Attachment+Extensions.swift */,
+				113D8C931F2FC09100A03AA7 /* UIButton+DecisionButton.swift */,
+				11EDFABF1F38DDD60040E312 /* User+Sets.swift */,
+				113D8C4C1F2F8C3E00A03AA7 /* Main.storyboard */,
+				113D8C4F1F2F8C3E00A03AA7 /* Assets.xcassets */,
+				113D8C511F2F8C3E00A03AA7 /* LaunchScreen.storyboard */,
+				113D8C541F2F8C3E00A03AA7 /* Info.plist */,
+			);
+			path = SlackBotTestApp;
+			sourceTree = "<group>";
+		};
+		113D8C5C1F2F8C3E00A03AA7 /* SlackBotTestAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				113D8C5D1F2F8C3E00A03AA7 /* SlackBotTestAppTests.swift */,
+				113D8C5F1F2F8C3E00A03AA7 /* Info.plist */,
+			);
+			path = SlackBotTestAppTests;
+			sourceTree = "<group>";
+		};
+		113D8C671F2F8C3E00A03AA7 /* SlackBotTestAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				113D8C681F2F8C3E00A03AA7 /* SlackBotTestAppUITests.swift */,
+				113D8C6A1F2F8C3E00A03AA7 /* Info.plist */,
+			);
+			path = SlackBotTestAppUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		113D8C441F2F8C3E00A03AA7 /* SlackBotTestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 113D8C6D1F2F8C3E00A03AA7 /* Build configuration list for PBXNativeTarget "SlackBotTestApp" */;
+			buildPhases = (
+				113D8C411F2F8C3E00A03AA7 /* Sources */,
+				113D8C421F2F8C3E00A03AA7 /* Frameworks */,
+				113D8C431F2F8C3E00A03AA7 /* Resources */,
+				113D8C8E1F2F97CA00A03AA7 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SlackBotTestApp;
+			productName = SlackBotTestApp;
+			productReference = 113D8C451F2F8C3E00A03AA7 /* SlackBotTestApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		113D8C581F2F8C3E00A03AA7 /* SlackBotTestAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 113D8C701F2F8C3E00A03AA7 /* Build configuration list for PBXNativeTarget "SlackBotTestAppTests" */;
+			buildPhases = (
+				113D8C551F2F8C3E00A03AA7 /* Sources */,
+				113D8C561F2F8C3E00A03AA7 /* Frameworks */,
+				113D8C571F2F8C3E00A03AA7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				113D8C5B1F2F8C3E00A03AA7 /* PBXTargetDependency */,
+			);
+			name = SlackBotTestAppTests;
+			productName = SlackBotTestAppTests;
+			productReference = 113D8C591F2F8C3E00A03AA7 /* SlackBotTestAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		113D8C631F2F8C3E00A03AA7 /* SlackBotTestAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 113D8C731F2F8C3E00A03AA7 /* Build configuration list for PBXNativeTarget "SlackBotTestAppUITests" */;
+			buildPhases = (
+				113D8C601F2F8C3E00A03AA7 /* Sources */,
+				113D8C611F2F8C3E00A03AA7 /* Frameworks */,
+				113D8C621F2F8C3E00A03AA7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				113D8C661F2F8C3E00A03AA7 /* PBXTargetDependency */,
+			);
+			name = SlackBotTestAppUITests;
+			productName = SlackBotTestAppUITests;
+			productReference = 113D8C641F2F8C3E00A03AA7 /* SlackBotTestAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		113D8C3D1F2F8C3E00A03AA7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Adam Felix";
+				TargetAttributes = {
+					113D8C441F2F8C3E00A03AA7 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = D3RJBXXU45;
+						ProvisioningStyle = Automatic;
+					};
+					113D8C581F2F8C3E00A03AA7 = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 113D8C441F2F8C3E00A03AA7;
+					};
+					113D8C631F2F8C3E00A03AA7 = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 113D8C441F2F8C3E00A03AA7;
+					};
+				};
+			};
+			buildConfigurationList = 113D8C401F2F8C3E00A03AA7 /* Build configuration list for PBXProject "SlackBotTestApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 113D8C3C1F2F8C3E00A03AA7;
+			productRefGroup = 113D8C461F2F8C3E00A03AA7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				113D8C441F2F8C3E00A03AA7 /* SlackBotTestApp */,
+				113D8C581F2F8C3E00A03AA7 /* SlackBotTestAppTests */,
+				113D8C631F2F8C3E00A03AA7 /* SlackBotTestAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		113D8C431F2F8C3E00A03AA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				113D8C531F2F8C3E00A03AA7 /* LaunchScreen.storyboard in Resources */,
+				113D8C501F2F8C3E00A03AA7 /* Assets.xcassets in Resources */,
+				113D8C4E1F2F8C3E00A03AA7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		113D8C571F2F8C3E00A03AA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		113D8C621F2F8C3E00A03AA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		113D8C411F2F8C3E00A03AA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				113D8C921F2FB09E00A03AA7 /* DecisionViewController.swift in Sources */,
+				11679D601F3CD82300E47F90 /* Attachment+Extensions.swift in Sources */,
+				113DB41E1F3FEC210038FEB5 /* MeetingViewController.swift in Sources */,
+				113D8C941F2FC09100A03AA7 /* UIButton+DecisionButton.swift in Sources */,
+				113D8C961F30D15200A03AA7 /* DeliveryViewController.swift in Sources */,
+				11EDFAC41F3940320040E312 /* API_KEY.swift in Sources */,
+				11EDFAC21F393EDA0040E312 /* ChannelStore.swift in Sources */,
+				113D8C491F2F8C3E00A03AA7 /* AppDelegate.swift in Sources */,
+				11F4C59C1F3F64BD00119141 /* MeetingTableViewCell.swift in Sources */,
+				11EDFAC01F38DDD60040E312 /* User+Sets.swift in Sources */,
+				119EBDCF1F325A95002854D6 /* DeliveryTableViewCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		113D8C551F2F8C3E00A03AA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				113D8C5E1F2F8C3E00A03AA7 /* SlackBotTestAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		113D8C601F2F8C3E00A03AA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				113D8C691F2F8C3E00A03AA7 /* SlackBotTestAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		113D8C5B1F2F8C3E00A03AA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 113D8C441F2F8C3E00A03AA7 /* SlackBotTestApp */;
+			targetProxy = 113D8C5A1F2F8C3E00A03AA7 /* PBXContainerItemProxy */;
+		};
+		113D8C661F2F8C3E00A03AA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 113D8C441F2F8C3E00A03AA7 /* SlackBotTestApp */;
+			targetProxy = 113D8C651F2F8C3E00A03AA7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		113D8C4C1F2F8C3E00A03AA7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				113D8C4D1F2F8C3E00A03AA7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		113D8C511F2F8C3E00A03AA7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				113D8C521F2F8C3E00A03AA7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		113D8C6B1F2F8C3E00A03AA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		113D8C6C1F2F8C3E00A03AA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		113D8C6E1F2F8C3E00A03AA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = D3RJBXXU45;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = SlackBotTestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adamfelix.SlackBotTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		113D8C6F1F2F8C3E00A03AA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = D3RJBXXU45;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = SlackBotTestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adamfelix.SlackBotTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		113D8C711F2F8C3E00A03AA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SlackBotTestAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adamfelix.SlackBotTestAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SlackBotTestApp.app/SlackBotTestApp";
+			};
+			name = Debug;
+		};
+		113D8C721F2F8C3E00A03AA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SlackBotTestAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adamfelix.SlackBotTestAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SlackBotTestApp.app/SlackBotTestApp";
+			};
+			name = Release;
+		};
+		113D8C741F2F8C3E00A03AA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = SlackBotTestAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adamfelix.SlackBotTestAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SlackBotTestApp;
+			};
+			name = Debug;
+		};
+		113D8C751F2F8C3E00A03AA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = SlackBotTestAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.adamfelix.SlackBotTestAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SlackBotTestApp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		113D8C401F2F8C3E00A03AA7 /* Build configuration list for PBXProject "SlackBotTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				113D8C6B1F2F8C3E00A03AA7 /* Debug */,
+				113D8C6C1F2F8C3E00A03AA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		113D8C6D1F2F8C3E00A03AA7 /* Build configuration list for PBXNativeTarget "SlackBotTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				113D8C6E1F2F8C3E00A03AA7 /* Debug */,
+				113D8C6F1F2F8C3E00A03AA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		113D8C701F2F8C3E00A03AA7 /* Build configuration list for PBXNativeTarget "SlackBotTestAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				113D8C711F2F8C3E00A03AA7 /* Debug */,
+				113D8C721F2F8C3E00A03AA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		113D8C731F2F8C3E00A03AA7 /* Build configuration list for PBXNativeTarget "SlackBotTestAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				113D8C741F2F8C3E00A03AA7 /* Debug */,
+				113D8C751F2F8C3E00A03AA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 113D8C3D1F2F8C3E00A03AA7 /* Project object */;
+}
