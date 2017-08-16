@@ -28,7 +28,7 @@ class DecisionViewController: UIViewController {
 
     private func setupDeliveryButton(){
         self.deliveryButton = UIButton.decisionButton(in: self.view,
-                                                      title: "I have a package for ...",
+                                                      title: "I have a parcel for ...",
                                                       y: 3 * self.view.bounds.height / 4)
         self.deliveryButton.addTarget(self,
                                       action: #selector(DecisionViewController.deliveryButtonClicked(sender:)),

@@ -64,7 +64,7 @@ class DeliveryViewController: UIViewController {
     private func setupSearchController() {
         self.searchController.searchResultsUpdater = self
         self.setupSearchBarStyle()
-        self.searchController.searchBar.scopeButtonTitles = self.channelStore.channels.map { $0.name! }
+        self.searchController.searchBar.scopeButtonTitles = self.channelStore.sortedChannels.map { $0.name! }
     }
 
     func searchBarIsActive() -> Bool {
@@ -89,7 +89,7 @@ class DeliveryViewController: UIViewController {
     }
 
     func filterContentForScope(index: Int) {
-        guard let members = self.channelStore.channels[index].members else { return }
+        guard let members = self.channelStore.sortedChannels[index].members else { return }
 
         self.filteredUsers = self.channelStore.usersArray.filter { user in
             guard let id = user.id else { return false }

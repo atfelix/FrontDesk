@@ -30,7 +30,7 @@ extension Attachment {
 
     private static func deliveryFallback(for user: User) -> String {
         guard let name = user.name else { return "banana" }
-        return "Hey @\(name), you have a package for delivery."
+        return "Hey @\(name), you have a parcel for delivery."
     }
 
     private static func meetingFallback(for user: User) -> String {

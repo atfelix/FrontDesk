@@ -29,5 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self]).backgroundColor = .black
         UISwitch.appearance().tintColor = .black
         UISwitch.appearance().onTintColor = .black
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.black], for: .normal)
     }
 }

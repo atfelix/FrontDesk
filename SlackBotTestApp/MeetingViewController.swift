@@ -23,16 +23,32 @@ class MeetingViewController: UIViewController {
     var webAPI: WebAPI!
     var filteredUsers: [User]!
 
+    lazy var previousNextToolbar : UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.sizeToFit()
+
+        let previousBarButtonItem = UIBarButtonItem(title: "Previous", style: .plain, target: self, action: nil)
+        let nextBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: nil)
+
+        toolbar.setItems([previousBarButtonItem, nextBarButtonItem], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        return toolbar
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setupNavigationItem()
         self.setupSearchController()
         self.filterContentForScope(index: 0)
+        self.nameLabel.delegate = self
+        self.companyLabel.delegate = self
+        self.emailLabel.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        self.searchController.searchBar.becomeFirstResponder()
+        self.nameLabel.becomeFirstResponder()
         self.searchController.isActive = true
     }
 
@@ -49,19 +65,21 @@ class MeetingViewController: UIViewController {
                 return
         }
 
-        for indexPath in indexPaths {
-            sleep(2)
-            self.webAPI.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
-                                    text: "",
-                                    linkNames: true,
-                                    attachments: Attachment.meetingAttachment(for: self.tableView.cellForRow(at: indexPath) as! MeetingTableViewCell,
-                                                                              name: name,
-                                                                              from: company,
-                                                                              with: email),
-                                    success: nil,
-                                    failure: { error in
-                                        print(error)
-            })
+        DispatchQueue.global(qos: .background).async {
+            for indexPath in indexPaths {
+                sleep(2)
+                self.webAPI.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
+                                        text: "",
+                                        linkNames: true,
+                                        attachments: Attachment.meetingAttachment(for: self.tableView.cellForRow(at: indexPath) as! MeetingTableViewCell,
+                                                                                  name: name,
+                                                                                  from: company,
+                                                                                  with: email),
+                                        success: nil,
+                                        failure: { error in
+                                            print(error)
+                })
+            }
         }
     }
 
@@ -77,7 +95,7 @@ class MeetingViewController: UIViewController {
     private func setupSearchController() {
         self.searchController.searchResultsUpdater = self
         self.setupSearchBarStyle()
-        self.searchController.searchBar.scopeButtonTitles = self.channelStore.channels.map { $0.name! }
+        self.searchController.searchBar.scopeButtonTitles = self.channelStore.sortedChannels.map { $0.name! }
     }
 
     func searchBarIsActive() -> Bool {
@@ -102,7 +120,7 @@ class MeetingViewController: UIViewController {
     }
 
     func filterContentForScope(index: Int) {
-        guard let members = self.channelStore.channels[index].members else { return }
+        guard let members = self.channelStore.sortedChannels[index].members else { return }
 
         self.filteredUsers = self.channelStore.usersArray.filter { user in
             guard let id = user.id else { return false }
@@ -153,5 +171,26 @@ extension MeetingViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         self.filterContentForScope(index: selectedScope)
         self.filterContentForSearchText(searchText: text)
+    }
+}
+
+extension MeetingViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        textField.inputAccessoryView = self.previousNextToolbar
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.nameLabel {
+            self.companyLabel.becomeFirstResponder()
+        }
+        else if textField == self.companyLabel {
+            self.emailLabel.becomeFirstResponder()
+        }
+        else if textField == self.emailLabel {
+            self.searchController.searchBar.becomeFirstResponder()
+        }
+
+        return true
     }
 }

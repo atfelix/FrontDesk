@@ -10,7 +10,12 @@ import SKCore
 import SKWebAPI
 
 class ChannelStore {
-    var channels = [Channel]()
+    private var channels = [Channel]()
+    var sortedChannels: [Channel] {
+        get {
+            return self.channels.sorted { ($0.name)! < ($1.name)! }
+        }
+    }
     private var users = Set<User>()
     var usersArray: [User] {
         get {
