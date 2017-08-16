@@ -17,7 +17,7 @@ class MeetingViewController: UIViewController {
     @IBOutlet weak var emailLabel: UITextField!
 
     var notifyButton: UIBarButtonItem!
-    let searchController = UISearchController(searchResultsController: nil)
+    let searchController = SlackSearchController(searchResultsController: nil)
 
     var channelStore: ChannelStore!
     var webAPI: WebAPI!
@@ -39,8 +39,13 @@ class MeetingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.searchController.setupSearchController(in: self,
+                                                    with: self.tableView,
+                                                    with: self.channelStore.sortedChannels.map { $0.name! })
+
         self.setupNavigationItem()
-        self.setupSearchController()
+        self.definesPresentationContext = true
+        self.searchController.searchBar.delegate = self
         self.filterContentForScope(index: 0)
         self.nameLabel.delegate = self
         self.companyLabel.delegate = self
@@ -92,53 +97,36 @@ class MeetingViewController: UIViewController {
         self.automaticallyAdjustsScrollViewInsets = false
     }
 
-    private func setupSearchController() {
-        self.searchController.searchResultsUpdater = self
-        self.setupSearchBarStyle()
-        self.searchController.searchBar.scopeButtonTitles = self.channelStore.sortedChannels.map { $0.name! }
-    }
-
-    func searchBarIsActive() -> Bool {
-        return self.searchController.isActive && self.searchController.searchBar.text != ""
-    }
-
-    private func setupSearchBarStyle() {
-        self.searchController.dimsBackgroundDuringPresentation = false
-        self.definesPresentationContext = true
-        self.tableView.tableHeaderView = self.searchController.searchBar
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.searchBar.delegate = self
-    }
-
     func filterContentForSearchText(searchText: String) {
-        guard self.searchBarIsActive() else { return }
-
-        self.filteredUsers = self.filteredUsers.filter { user in
-            return (user.profile?.realName?.lowercased().contains(searchText.lowercased())) ?? (searchText == "")
-        }
-        self.tableView.reloadData()
+        guard let filteredUsers = self.searchController.filter(content: self.filteredUsers, for: searchText) else { return }
+        self.filteredUsers = filteredUsers
     }
 
     func filterContentForScope(index: Int) {
-        guard let members = self.channelStore.sortedChannels[index].members else { return }
-
-        self.filteredUsers = self.channelStore.usersArray.filter { user in
-            guard let id = user.id else { return false }
-            return members.contains(id)
+        guard let filteredUsers = self.searchController.filter(content: self.channelStore.usersArray,
+                                                               in: self.channelStore,
+                                                               for: index) else {
+                                                                return
         }
-        self.tableView.reloadData()
+        self.filteredUsers = filteredUsers
+    }
+
+    func reloadData(criterion: Bool = true) {
+        if criterion {
+            self.tableView.reloadData()
+        }
     }
 }
 
 extension MeetingViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.searchBarIsActive()) ? self.filteredUsers.count : self.channelStore.usersArray.count
+        return (self.searchController.searchBarIsActive()) ? self.filteredUsers.count : self.channelStore.usersArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MeetingCell", for: indexPath) as! MeetingTableViewCell
-        cell.user = (self.searchBarIsActive()) ? self.filteredUsers[indexPath.row] : self.channelStore.usersArray[indexPath.row]
+        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers[indexPath.row] : self.channelStore.usersArray[indexPath.row]
         cell.displayCell()
         return cell
     }
@@ -156,6 +144,10 @@ extension MeetingViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "" {
             self.filterContentForScope(index: searchBar.selectedScopeButtonIndex)
+            let searchText = searchBar.text ?? ""
+            let splice = String(searchText.characters.dropLast())
+            self.filterContentForSearchText(searchText: splice)
+            self.reloadData()
         }
 
         return true
@@ -164,6 +156,7 @@ extension MeetingViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text != "" {
             self.filterContentForSearchText(searchText: searchBar.text ?? "")
+            self.reloadData()
         }
     }
 
@@ -171,6 +164,7 @@ extension MeetingViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         self.filterContentForScope(index: selectedScope)
         self.filterContentForSearchText(searchText: text)
+        self.reloadData()
     }
 }
 

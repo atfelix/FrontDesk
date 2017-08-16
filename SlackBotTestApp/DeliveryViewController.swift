@@ -47,14 +47,16 @@ class DeliveryViewController: UIViewController {
                 return
         }
 
-        for indexPath in indexPaths {
-            sleep(2)
-            self.webAPI.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
-                                    text: "",
-                                    linkNames: true,
-                                    attachments: Attachment.deliveryAttachment(for: self.tableView.cellForRow(at: indexPath) as! DeliveryTableViewCell),
-                                    success: nil,
-                                    failure: nil)
+        DispatchQueue.global(qos: .background).async {
+            for indexPath in indexPaths {
+                sleep(2)
+                self.webAPI.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
+                                        text: "",
+                                        linkNames: true,
+                                        attachments: Attachment.deliveryAttachment(for: self.tableView.cellForRow(at: indexPath) as! DeliveryTableViewCell),
+                                        success: nil,
+                                        failure: nil)
+            }
         }
     }
 
@@ -82,7 +84,7 @@ class DeliveryViewController: UIViewController {
         self.filteredUsers = filteredUsers
     }
 
-    func reloadData(criterion: Bool) {
+    func reloadData(criterion: Bool = true) {
         if criterion {
             self.tableView.reloadData()
         }
@@ -118,7 +120,7 @@ extension DeliveryViewController: UISearchBarDelegate {
             let searchText = searchBar.text ?? ""
             let splice = String(searchText.characters.dropLast())
             self.filterContentForSearchText(searchText: splice)
-            self.reloadData(criterion: true)
+            self.reloadData()
         }
         return true
     }
@@ -126,7 +128,7 @@ extension DeliveryViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text != "" {
             self.filterContentForSearchText(searchText: searchBar.text ?? "")
-            self.reloadData(criterion: true)
+            self.reloadData()
         }
     }
 
@@ -134,7 +136,7 @@ extension DeliveryViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         self.filterContentForScope(index: selectedScope)
         self.filterContentForSearchText(searchText: text)
-        self.reloadData(criterion: true)
+        self.reloadData()
     }
 }
 
