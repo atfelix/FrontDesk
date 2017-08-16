@@ -7,34 +7,45 @@
 //
 
 import UIKit
+import SKCore
 
 class SlackSearchController: UISearchController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.isActive = true
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func setupSearchController<T: UISearchResultsUpdating>(in viewController: T, with tableView: UITableView, with scopeButtonTitles: [String]) {
+        self.searchResultsUpdater = viewController
+        self.setupSearchBarStyle(with: tableView)
+        self.searchBar.scopeButtonTitles = scopeButtonTitles
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func setupSearchBarStyle(with tableView: UITableView) {
+        self.dimsBackgroundDuringPresentation = false
+        tableView.tableHeaderView = self.searchBar
+        self.hidesNavigationBarDuringPresentation = false
     }
-    */
 
+    func searchBarIsActive() -> Bool {
+        return self.isActive && self.searchBar.text != ""
+    }
+
+    func filter(content: [User], for searchText: String) -> [User]? {
+        guard self.searchBarIsActive() else { return nil }
+
+        return content.filter { user in
+            return (user.profile?.realName?.lowercased().contains(searchText.lowercased())) ?? (searchText == "")
+        }
+    }
+
+    func filter(content: [User], in channelStore: ChannelStore, for scopeIndex: Int) -> [User]? {
+        guard let members = channelStore.sortedChannels[scopeIndex].members else { return nil }
+
+        return content.filter { user in
+            guard let id = user.id else { return false }
+            return members.contains(id)
+        }
+    }
 }
