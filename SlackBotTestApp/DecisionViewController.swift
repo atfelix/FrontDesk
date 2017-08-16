@@ -11,8 +11,8 @@ import SKWebAPI
 
 class DecisionViewController: UIViewController {
 
-    var deliveryButton: UIButton!
-    var meetingButton: UIButton!
+    @IBOutlet weak var deliveryButton: UIButton!
+    @IBOutlet weak var meetingButton: UIButton!
 
     var channelStore: ChannelStore!
 
@@ -27,21 +27,26 @@ class DecisionViewController: UIViewController {
     }
 
     private func setupDeliveryButton(){
-        self.deliveryButton = UIButton.decisionButton(in: self.view,
-                                                      title: "I have a parcel for ...",
-                                                      y: 3 * self.view.bounds.height / 4)
-        self.deliveryButton.addTarget(self,
-                                      action: #selector(DecisionViewController.deliveryButtonClicked(sender:)),
-                                      for: .touchUpInside)
+        self.setupDecisionButton(button: self.deliveryButton,
+                                 title: "I have a parcel for ...",
+                                 action: #selector(DecisionViewController.deliveryButtonClicked(sender:)))
     }
 
     private func setupMeetingButton() {
-        self.meetingButton = UIButton.decisionButton(in: self.view,
-                                                     title: "I have a meeting with ...",
-                                                     y: self.view.bounds.height / 4)
-        self.meetingButton.addTarget(self,
-                                     action: #selector(DecisionViewController.meetingButtonClicked(sender:)),
-                                     for: .touchUpInside)
+        self.setupDecisionButton(button: self.meetingButton,
+                                 title: "I have a meeting with ...",
+                                 action: #selector(DecisionViewController.meetingButtonClicked(sender:)))
+    }
+
+    private func setupDecisionButton(button: UIButton, title: String, action: Selector) {
+        UIButton.setupDecisionButton(button: button, title: title)
+        button.addTarget(self,
+                         action: action,
+                         for: .touchUpInside)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let viewController = segue.destination as
     }
 
     func deliveryButtonClicked(sender: UIButton) {
