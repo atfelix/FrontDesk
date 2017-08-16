@@ -11,11 +11,6 @@ import SKCore
 
 class SlackSearchController: UISearchController {
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.isActive = true
-    }
-
     func setupSearchController<T: UISearchResultsUpdating>(in viewController: T, with tableView: UITableView, with scopeButtonTitles: [String]) {
         self.searchResultsUpdater = viewController
         self.setupSearchBarStyle(with: tableView)
@@ -29,14 +24,16 @@ class SlackSearchController: UISearchController {
     }
 
     func searchBarIsActive() -> Bool {
-        return self.isActive && self.searchBar.text != ""
+        return self.isActive && self.searchBar.isFirstResponder
     }
 
     func filter(content: [User], for searchText: String) -> [User]? {
-        guard self.searchBarIsActive() else { return nil }
+        guard self.searchBarIsActive() else {
+            return nil
+        }
 
         return content.filter { user in
-            return (user.profile?.realName?.lowercased().contains(searchText.lowercased())) ?? (searchText == "")
+            return searchText.isEmpty || (user.profile?.realName?.lowercased().contains(searchText.lowercased()) ?? false)
         }
     }
 

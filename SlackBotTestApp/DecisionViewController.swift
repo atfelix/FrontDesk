@@ -48,6 +48,7 @@ class DecisionViewController: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "DeliveryViewController") as! DeliveryViewController
         vc.channelStore = self.channelStore
         vc.webAPI = self.channelStore.webAPI
+        vc.filteredUsers = self.channelStore.usersArray
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -55,6 +56,7 @@ class DecisionViewController: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "MeetingViewController") as! MeetingViewController
         vc.channelStore = self.channelStore
         vc.webAPI = self.channelStore.webAPI
+        vc.filteredUsers = self.channelStore.usersArray
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

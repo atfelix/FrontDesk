@@ -37,7 +37,6 @@ class ChannelStore {
                                          success: { (channel) in
                                             self?.channels.append(channel)
                                             self?.getUsers(for: channel)
-                                            print(channel.members ?? "wtf")
                 }, failure: { (error) in
                     print(error)
                 })
