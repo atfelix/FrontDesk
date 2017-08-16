@@ -126,7 +126,6 @@ extension DeliveryViewController: UISearchBarDelegate {
         if text == "" {
             self.filterContentForScope(index: searchBar.selectedScopeButtonIndex)
         }
-
         return true
     }
 
