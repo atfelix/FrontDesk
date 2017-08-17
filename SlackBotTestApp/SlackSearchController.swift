@@ -8,10 +8,22 @@
 
 import UIKit
 import SKCore
+import SKWebAPI
+
+protocol SlackTableViewCell {
+    var user: User? { get set }
+    func displayCell()
+}
+
+protocol SlackViewController {
+    var channelStore: ChannelStore? { get set }
+    var webAPI: WebAPI? { get set }
+    var filteredUsers: [User]? { get set }
+}
 
 class SlackSearchController: UISearchController {
 
-    func setupSearchController<T: UISearchResultsUpdating>(in viewController: T, with tableView: UITableView, with scopeButtonTitles: [String]) {
+    func setupSearchController<T: UISearchResultsUpdating>(in viewController: T, with tableView: UITableView, with scopeButtonTitles: [String]?) {
         self.searchResultsUpdater = viewController
         self.setupSearchBarStyle(with: tableView)
         self.searchBar.scopeButtonTitles = scopeButtonTitles
@@ -27,18 +39,24 @@ class SlackSearchController: UISearchController {
         return self.isActive && self.searchBar.isFirstResponder
     }
 
-    func filter(content: [User], for searchText: String) -> [User]? {
-        guard self.searchBarIsActive() else {
+    func filter(content: [User]?, for searchText: String) -> [User]? {
+        guard
+            self.searchBarIsActive(),
+            let content = content else {
             return nil
         }
 
         return content.filter { user in
-            return searchText.isEmpty || (user.profile?.realName?.lowercased().contains(searchText.lowercased()) ?? false)
+            return searchText.isEmpty || (user.profile?.realName?.lowercased().range(of: searchText.lowercased()) != nil)
         }
     }
 
-    func filter(content: [User], in channelStore: ChannelStore, for scopeIndex: Int) -> [User]? {
-        guard let members = channelStore.sortedChannels[scopeIndex].members else { return nil }
+    func filter(content: [User]?, in channelStore: ChannelStore?, for scopeIndex: Int) -> [User]? {
+        guard
+            let members = channelStore?.sortedChannels[scopeIndex].members,
+            let content = content else {
+                return nil
+        }
 
         return content.filter { user in
             guard let id = user.id else { return false }

@@ -9,11 +9,19 @@
 import UIKit
 import SKCore
 
-class MeetingTableViewCell: UITableViewCell {
+class MeetingTableViewCell: UITableViewCell, SlackTableViewCell {
 
-    var user: User!
+    var _user: User?
+    var user: User? {
+        get {
+            return self._user
+        }
+        set {
+            self._user = newValue
+        }
+    }
 
     func displayCell() {
-        self.textLabel?.text = user.profile?.realName
+        self.textLabel?.text = self.user?.profile?.realName
     }
 }

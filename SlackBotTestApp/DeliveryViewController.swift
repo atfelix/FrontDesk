@@ -9,22 +9,48 @@
 import UIKit
 import SKWebAPI
 
-class DeliveryViewController: UIViewController {
+class DeliveryViewController: UIViewController, SlackViewController {
 
     @IBOutlet weak var tableView: UITableView!
     var notifyButton: UIBarButtonItem!
     let searchController = SlackSearchController(searchResultsController: nil)
 
-    var channelStore: ChannelStore!
-    var webAPI: WebAPI!
-    var filteredUsers: [User]!
+    var _channelStore: ChannelStore?
+    var channelStore: ChannelStore? {
+        get {
+            return self._channelStore
+        }
+        set {
+            self._channelStore = newValue
+        }
+    }
+
+    var _webAPI: WebAPI?
+    var webAPI: WebAPI? {
+        get {
+            return self._webAPI
+        }
+        set {
+            self._webAPI = newValue
+        }
+    }
+
+    var _filteredUsers: [User]?
+    var filteredUsers: [User]? {
+        get {
+            return self._filteredUsers
+        }
+        set {
+            self._filteredUsers = newValue
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
-                                                    with: self.channelStore.sortedChannels.map { $0.name! })
+                                                    with: self.channelStore?.sortedChannels.map { $0.name! })
 
         self.setupNavigationItem()
         self.definesPresentationContext = true
@@ -50,7 +76,7 @@ class DeliveryViewController: UIViewController {
         DispatchQueue.global(qos: .background).async {
             for indexPath in indexPaths {
                 sleep(2)
-                self.webAPI.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
+                self.webAPI?.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
                                         text: "",
                                         linkNames: true,
                                         attachments: Attachment.deliveryAttachment(for: self.tableView.cellForRow(at: indexPath) as! DeliveryTableViewCell),
@@ -75,9 +101,9 @@ class DeliveryViewController: UIViewController {
 
     func filterContentForScope(index: Int) {
 
-        guard let filteredUsers = self.searchController.filter(content: self.channelStore.usersArray,
-                                                             in: self.channelStore,
-                                                             for: index) else {
+        guard let filteredUsers = self.searchController.filter(content: self.channelStore?.usersArray,
+                                                               in: self.channelStore,
+                                                               for: index) else {
                                                                 return
         }
 
@@ -94,14 +120,14 @@ class DeliveryViewController: UIViewController {
 extension DeliveryViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.searchController.searchBarIsActive()) ? self.filteredUsers.count : self.channelStore.usersArray.count
+        return (self.searchController.searchBarIsActive()) ? (self.filteredUsers?.count ?? 0) : (self.channelStore?.usersArray.count ?? 0)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DeliveryCell", for: indexPath) as! DeliveryTableViewCell
-        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers[indexPath.row] : self.channelStore.usersArray[indexPath.row]
+        var cell = tableView.dequeueReusableCell(withIdentifier: "DeliveryCell", for: indexPath) as! SlackTableViewCell
+        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers?[indexPath.row] : self.channelStore?.usersArray[indexPath.row]
         cell.displayCell()
-        return cell
+        return cell as! UITableViewCell
     }
 }
 

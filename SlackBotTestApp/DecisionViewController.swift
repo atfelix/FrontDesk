@@ -28,40 +28,22 @@ class DecisionViewController: UIViewController {
 
     private func setupDeliveryButton(){
         self.setupDecisionButton(button: self.deliveryButton,
-                                 title: "I have a parcel for ...",
-                                 action: #selector(DecisionViewController.deliveryButtonClicked(sender:)))
+                                 title: "I have a parcel for ...")
     }
 
     private func setupMeetingButton() {
         self.setupDecisionButton(button: self.meetingButton,
-                                 title: "I have a meeting with ...",
-                                 action: #selector(DecisionViewController.meetingButtonClicked(sender:)))
+                                 title: "I have a meeting with ...")
     }
 
-    private func setupDecisionButton(button: UIButton, title: String, action: Selector) {
+    private func setupDecisionButton(button: UIButton, title: String) {
         UIButton.setupDecisionButton(button: button, title: title)
-        button.addTarget(self,
-                         action: action,
-                         for: .touchUpInside)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let viewController = segue.destination as
-    }
-
-    func deliveryButtonClicked(sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "DeliveryViewController") as! DeliveryViewController
+        var vc = segue.destination as! SlackViewController
         vc.channelStore = self.channelStore
         vc.webAPI = self.channelStore.webAPI
         vc.filteredUsers = self.channelStore.usersArray
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-
-    func meetingButtonClicked(sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MeetingViewController") as! MeetingViewController
-        vc.channelStore = self.channelStore
-        vc.webAPI = self.channelStore.webAPI
-        vc.filteredUsers = self.channelStore.usersArray
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

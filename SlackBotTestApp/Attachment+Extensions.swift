@@ -10,18 +10,21 @@ import SKCore
 
 extension Attachment {
     static func deliveryAttachment(for deliveryCell: DeliveryTableViewCell) -> [Attachment]? {
-        return [Attachment(fallback: self.deliveryFallback(for: deliveryCell.user),
+        guard let user = deliveryCell.user else { return nil }
+
+        return [Attachment(fallback: self.deliveryFallback(for: user),
                            title: nil,
                            colorHex: colorHex(),
-                           pretext: self.deliveryPretext(for: deliveryCell.user),
+                           pretext: self.deliveryPretext(for: user),
                            fields: self.deliveryFields(for: deliveryCell))]
     }
 
     static func meetingAttachment(for meetingCell: MeetingTableViewCell, name: String, from company: String, with email: String) -> [Attachment]? {
-        return [Attachment(fallback: self.meetingFallback(for: meetingCell.user),
+        guard let user = meetingCell.user else { return nil }
+        return [Attachment(fallback: self.meetingFallback(for: user),
                            title: nil,
                            colorHex: colorHex(),
-                           pretext: self.meetingPretext(for: meetingCell.user),
+                           pretext: self.meetingPretext(for: user),
                            fields: self.meetingFields(for: meetingCell,
                                                       name: name,
                                                       from: company,

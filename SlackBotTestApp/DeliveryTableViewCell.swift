@@ -9,15 +9,23 @@
 import UIKit
 import SKCore
 
-class DeliveryTableViewCell: UITableViewCell {
+class DeliveryTableViewCell: UITableViewCell, SlackTableViewCell {
 
     @IBOutlet weak var leftAtFrontDeskSwitch: UISwitch!
     @IBOutlet weak var signatureRequiredSwitch: UISwitch!
     @IBOutlet weak var nameLabel: UILabel!
 
-    var user: User!
+    var _user: User?
+    var user: User? {
+        get {
+            return self._user
+        }
+        set {
+            self._user = newValue
+        }
+    }
     
     func displayCell() {
-        self.nameLabel.text = user.profile?.realName
+        self.nameLabel.text = self.user?.profile?.realName
     }
 }

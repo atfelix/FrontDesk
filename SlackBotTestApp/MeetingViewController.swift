@@ -9,7 +9,7 @@
 import UIKit
 import SKWebAPI
 
-class MeetingViewController: UIViewController {
+class MeetingViewController: UIViewController, SlackViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var nameLabel: UITextField!
@@ -19,11 +19,37 @@ class MeetingViewController: UIViewController {
     var notifyButton: UIBarButtonItem!
     let searchController = SlackSearchController(searchResultsController: nil)
 
-    var channelStore: ChannelStore!
-    var webAPI: WebAPI!
-    var filteredUsers: [User]!
+    var _channelStore: ChannelStore?
+    var channelStore: ChannelStore? {
+        get {
+            return self._channelStore
+        }
+        set {
+            self._channelStore = newValue
+        }
+    }
 
-    lazy var previousNextToolbar : UIToolbar = {
+    var _webAPI: WebAPI?
+    var webAPI: WebAPI? {
+        get {
+            return self._webAPI
+        }
+        set {
+            self._webAPI = newValue
+        }
+    }
+
+    var _filteredUsers: [User]?
+    var filteredUsers: [User]? {
+        get {
+            return self._filteredUsers
+        }
+        set {
+            self._filteredUsers = newValue
+        }
+    }
+
+    lazy var previousNextToolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
         toolbar.sizeToFit()
@@ -41,7 +67,7 @@ class MeetingViewController: UIViewController {
 
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
-                                                    with: self.channelStore.sortedChannels.map { $0.name! })
+                                                    with: self.channelStore?.sortedChannels.map { $0.name! })
 
         self.setupNavigationItem()
         self.definesPresentationContext = true
@@ -73,7 +99,7 @@ class MeetingViewController: UIViewController {
         DispatchQueue.global(qos: .background).async {
             for indexPath in indexPaths {
                 sleep(2)
-                self.webAPI.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
+                self.webAPI?.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
                                         text: "",
                                         linkNames: true,
                                         attachments: Attachment.meetingAttachment(for: self.tableView.cellForRow(at: indexPath) as! MeetingTableViewCell,
@@ -103,7 +129,7 @@ class MeetingViewController: UIViewController {
     }
 
     func filterContentForScope(index: Int) {
-        guard let filteredUsers = self.searchController.filter(content: self.channelStore.usersArray,
+        guard let filteredUsers = self.searchController.filter(content: self.channelStore?.usersArray,
                                                                in: self.channelStore,
                                                                for: index) else {
                                                                 return
@@ -121,12 +147,12 @@ class MeetingViewController: UIViewController {
 extension MeetingViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.searchController.searchBarIsActive()) ? self.filteredUsers.count : self.channelStore.usersArray.count
+        return (self.searchController.searchBarIsActive()) ? (self.filteredUsers?.count ?? 0) : (self.channelStore?.usersArray.count ?? 0)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MeetingCell", for: indexPath) as! MeetingTableViewCell
-        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers[indexPath.row] : self.channelStore.usersArray[indexPath.row]
+        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers?[indexPath.row] : self.channelStore?.usersArray[indexPath.row]
         cell.displayCell()
         return cell
     }
