@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupAppearance()
         let navController = self.window?.rootViewController as! UINavigationController
         let decisionVC = navController.topViewController as! DecisionViewController
-        decisionVC.channelStore = ChannelStore(token: SLACK_API_KEY)
+        decisionVC.slackStore = SlackStore(token: SLACK_API_KEY)
         return true
     }
 

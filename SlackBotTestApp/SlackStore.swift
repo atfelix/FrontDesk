@@ -1,5 +1,5 @@
 //
-//  ChannelStore.swift
+//  SlackStore.swift
 //  SlackBotTestApp
 //
 //  Created by atfelix on 2017-08-07.
@@ -9,7 +9,13 @@
 import SKCore
 import SKWebAPI
 
-class ChannelStore {
+public typealias FailureClosure = (_ error: SlackError) -> Void
+
+public enum ParseMode: String {
+    case full, none
+}
+
+class SlackStore {
     private var channels = [Channel]()
     var sortedChannels: [Channel] {
         get {
@@ -66,5 +72,35 @@ class ChannelStore {
                     print(error)
             })
         }
+    }
+}
+
+extension SlackStore {
+    func sendMessage(
+        channel: String,
+        text: String,
+        username: String? = nil,
+        asUser: Bool? = nil,
+        linkNames: Bool? = nil,
+        attachments: [Attachment?]? = nil,
+        unfurlLinks: Bool? = nil,
+        unfurlMedia: Bool? = nil,
+        iconURL: String? = nil,
+        iconEmoji: String? = nil,
+        success: (((ts: String?, channel: String?)) -> Void)?,
+        failure: FailureClosure?
+    ) {
+        self.webAPI.sendMessage(channel: channel,
+                                text: text,
+                                username: username,
+                                asUser: asUser,
+                                linkNames: linkNames,
+                                attachments: attachments,
+                                unfurlLinks: unfurlLinks,
+                                unfurlMedia: unfurlMedia,
+                                iconURL: iconURL,
+                                iconEmoji: iconEmoji,
+                                success: success,
+                                failure: failure)
     }
 }
