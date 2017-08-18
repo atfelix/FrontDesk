@@ -71,11 +71,8 @@ class MeetingViewController: UIViewController, SlackViewController {
 
         self.setupNavigationItem()
         self.definesPresentationContext = true
-        self.searchController.searchBar.delegate = self
         self.filterContentForScope(index: 0)
-        self.nameLabel.delegate = self
-        self.companyLabel.delegate = self
-        self.emailLabel.delegate = self
+        self.setupDelegates()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -114,15 +111,6 @@ class MeetingViewController: UIViewController, SlackViewController {
         }
     }
 
-    private func setupNavigationItem() {
-        self.navigationItem.title = "Meeting"
-        self.notifyButton = UIBarButtonItem(barButtonSystemItem: .action,
-                                            target: self,
-                                            action: #selector(MeetingViewController.notifyButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem = self.notifyButton
-        self.automaticallyAdjustsScrollViewInsets = false
-    }
-
     func filterContentForSearchText(searchText: String) {
         guard let filteredUsers = self.searchController.filter(content: self.filteredUsers, for: searchText) else { return }
         self.filteredUsers = filteredUsers
@@ -141,6 +129,22 @@ class MeetingViewController: UIViewController, SlackViewController {
         if criterion {
             self.tableView.reloadData()
         }
+    }
+
+    private func setupNavigationItem() {
+        self.navigationItem.title = "Meeting"
+        self.notifyButton = UIBarButtonItem(barButtonSystemItem: .action,
+                                            target: self,
+                                            action: #selector(MeetingViewController.notifyButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem = self.notifyButton
+        self.automaticallyAdjustsScrollViewInsets = false
+    }
+
+    private func setupDelegates() {
+        self.searchController.searchBar.delegate = self
+        self.nameLabel.delegate = self
+        self.companyLabel.delegate = self
+        self.emailLabel.delegate = self
     }
 }
 
