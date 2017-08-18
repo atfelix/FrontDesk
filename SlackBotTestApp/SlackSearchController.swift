@@ -16,7 +16,7 @@ protocol SlackTableViewCell {
 }
 
 protocol SlackViewController {
-    var channelStore: ChannelStore? { get set }
+    var slackStore: SlackStore? { get set }
     var webAPI: WebAPI? { get set }
     var filteredUsers: [User]? { get set }
 }
@@ -51,9 +51,9 @@ class SlackSearchController: UISearchController {
         }
     }
 
-    func filter(content: [User]?, in channelStore: ChannelStore?, for scopeIndex: Int) -> [User]? {
+    func filter(content: [User]?, in slackStore: SlackStore?, for scopeIndex: Int) -> [User]? {
         guard
-            let members = channelStore?.sortedChannels[scopeIndex].members,
+            let members = slackStore?.sortedChannels[scopeIndex].members,
             let content = content else {
                 return nil
         }

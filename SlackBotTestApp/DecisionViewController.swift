@@ -14,7 +14,7 @@ class DecisionViewController: UIViewController {
     @IBOutlet weak var deliveryButton: UIButton!
     @IBOutlet weak var meetingButton: UIButton!
 
-    var channelStore: ChannelStore!
+    var slackStore: SlackStore!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +42,8 @@ class DecisionViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var vc = segue.destination as! SlackViewController
-        vc.channelStore = self.channelStore
-        vc.webAPI = self.channelStore.webAPI
-        vc.filteredUsers = self.channelStore.usersArray
+        vc.slackStore = self.slackStore
+        vc.webAPI = self.slackStore.webAPI
+        vc.filteredUsers = self.slackStore.usersArray
     }
 }

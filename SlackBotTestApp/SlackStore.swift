@@ -1,5 +1,5 @@
 //
-//  ChannelStore.swift
+//  SlackStore.swift
 //  SlackBotTestApp
 //
 //  Created by atfelix on 2017-08-07.
@@ -9,7 +9,7 @@
 import SKCore
 import SKWebAPI
 
-class ChannelStore {
+class SlackStore {
     private var channels = [Channel]()
     var sortedChannels: [Channel] {
         get {

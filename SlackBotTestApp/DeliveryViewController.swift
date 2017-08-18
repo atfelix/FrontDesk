@@ -15,13 +15,13 @@ class DeliveryViewController: UIViewController, SlackViewController {
     var notifyButton: UIBarButtonItem!
     let searchController = SlackSearchController(searchResultsController: nil)
 
-    var _channelStore: ChannelStore?
-    var channelStore: ChannelStore? {
+    var _slackStore: SlackStore?
+    var slackStore: SlackStore? {
         get {
-            return self._channelStore
+            return self._slackStore
         }
         set {
-            self._channelStore = newValue
+            self._slackStore = newValue
         }
     }
 
@@ -50,7 +50,7 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
-                                                    with: self.channelStore?.sortedChannels.map { $0.name! })
+                                                    with: self.slackStore?.sortedChannels.map { $0.name! })
 
         self.setupNavigationItem()
         self.definesPresentationContext = true
@@ -101,8 +101,8 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
     func filterContentForScope(index: Int) {
 
-        guard let filteredUsers = self.searchController.filter(content: self.channelStore?.usersArray,
-                                                               in: self.channelStore,
+        guard let filteredUsers = self.searchController.filter(content: self.slackStore?.usersArray,
+                                                               in: self.slackStore,
                                                                for: index) else {
                                                                 return
         }
@@ -120,12 +120,12 @@ class DeliveryViewController: UIViewController, SlackViewController {
 extension DeliveryViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.searchController.searchBarIsActive()) ? (self.filteredUsers?.count ?? 0) : (self.channelStore?.usersArray.count ?? 0)
+        return (self.searchController.searchBarIsActive()) ? (self.filteredUsers?.count ?? 0) : (self.slackStore?.usersArray.count ?? 0)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "DeliveryCell", for: indexPath) as! SlackTableViewCell
-        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers?[indexPath.row] : self.channelStore?.usersArray[indexPath.row]
+        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers?[indexPath.row] : self.slackStore?.usersArray[indexPath.row]
         cell.displayCell()
         return cell as! UITableViewCell
     }
