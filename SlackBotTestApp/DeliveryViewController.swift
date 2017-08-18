@@ -41,7 +41,6 @@ class DeliveryViewController: UIViewController, SlackViewController {
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
                                                     with: self.slackStore?.sortedChannels.map { $0.defaultName })
-
         self.setupNavigationItem()
         self.definesPresentationContext = true
         self.searchController.searchBar.delegate = self
@@ -49,8 +48,8 @@ class DeliveryViewController: UIViewController, SlackViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        self.searchController.searchBar.becomeFirstResponder()
         self.searchController.isActive = true
+        self.searchController.searchBar.becomeFirstResponder()
     }
 
     func notifyButtonTapped(_ sender: UIButton) {
@@ -105,6 +104,11 @@ class DeliveryViewController: UIViewController, SlackViewController {
             self.tableView.reloadData()
         }
     }
+
+    func filterContent(index: Int, searchText: String) {
+        self.filterContentForScope(index: index)
+        self.filterContentForSearchText(searchText: searchText)
+    }
 }
 
 extension DeliveryViewController: UITableViewDataSource {
@@ -151,11 +155,6 @@ extension DeliveryViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         self.filterContent(index: selectedScope, searchText: text)
         self.reloadData()
-    }
-
-    private func filterContent(index: Int, searchText: String) {
-        self.filterContentForScope(index: index)
-        self.filterContentForSearchText(searchText: searchText)
     }
 }
 

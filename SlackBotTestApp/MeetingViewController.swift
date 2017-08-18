@@ -182,6 +182,11 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.currentFocusIndex += 1
         self.determineFirstResponder()
     }
+
+    func filterContent(index: Int, searchText: String) {
+        self.filterContentForScope(index: index)
+        self.filterContentForSearchText(searchText: searchText)
+    }
 }
 
 extension MeetingViewController: UITableViewDataSource {
@@ -215,10 +220,9 @@ extension MeetingViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "" {
-            self.filterContentForScope(index: searchBar.selectedScopeButtonIndex)
             let searchText = searchBar.text ?? ""
-            let splice = String(searchText.characters.dropLast())
-            self.filterContentForSearchText(searchText: splice)
+            self.filterContent(index: searchBar.selectedScopeButtonIndex,
+                               searchText: String(searchText.characters.dropLast()))
             self.reloadData()
         }
 
@@ -234,8 +238,7 @@ extension MeetingViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         guard let text = searchBar.text else { return }
-        self.filterContentForScope(index: selectedScope)
-        self.filterContentForSearchText(searchText: text)
+        self.filterContent(index: selectedScope, searchText: text)
         self.reloadData()
     }
 }

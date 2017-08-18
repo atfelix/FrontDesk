@@ -110,7 +110,7 @@
 		117242DE1F4492AE00BF4941 /* SlackSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackSearchController.swift; sourceTree = "<group>"; };
 		119EBDCE1F325A95002854D6 /* DeliveryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTableViewCell.swift; sourceTree = "<group>"; };
 		11ACB9E71F47382B00C16373 /* Channel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Channel+Extensions.swift"; sourceTree = "<group>"; };
-		11ACB9E91F475AED00C16373 /* UIButton+DecisionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIButton+DecisionButton.swift"; path = "SlackBotTestApp/UIButton+DecisionButton.swift"; sourceTree = "<group>"; };
+		11ACB9E91F475AED00C16373 /* UIButton+DecisionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+DecisionButton.swift"; sourceTree = "<group>"; };
 		11EDFABF1F38DDD60040E312 /* User+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Extensions.swift"; sourceTree = "<group>"; };
 		11EDFAC11F393EDA0040E312 /* SlackStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackStore.swift; sourceTree = "<group>"; };
 		11F4C59B1F3F64BD00119141 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
@@ -152,7 +152,6 @@
 		113D8C3C1F2F8C3E00A03AA7 = {
 			isa = PBXGroup;
 			children = (
-				11ACB9E91F475AED00C16373 /* UIButton+DecisionButton.swift */,
 				113D8C471F2F8C3E00A03AA7 /* SlackBotTestApp */,
 				113D8C5C1F2F8C3E00A03AA7 /* SlackBotTestAppTests */,
 				113D8C671F2F8C3E00A03AA7 /* SlackBotTestAppUITests */,
@@ -193,6 +192,7 @@
 				11EDFAC11F393EDA0040E312 /* SlackStore.swift */,
 				11EDFABF1F38DDD60040E312 /* User+Extensions.swift */,
 				11ACB9E71F47382B00C16373 /* Channel+Extensions.swift */,
+				11ACB9E91F475AED00C16373 /* UIButton+DecisionButton.swift */,
 				113D8C4C1F2F8C3E00A03AA7 /* Main.storyboard */,
 				113D8C4F1F2F8C3E00A03AA7 /* Assets.xcassets */,
 				113D8C511F2F8C3E00A03AA7 /* LaunchScreen.storyboard */,
