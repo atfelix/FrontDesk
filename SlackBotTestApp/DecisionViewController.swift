@@ -43,7 +43,6 @@ class DecisionViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var vc = segue.destination as! SlackViewController
         vc.slackStore = self.slackStore
-        vc.webAPI = self.slackStore.webAPI
         vc.filteredUsers = self.slackStore.usersArray
     }
 }

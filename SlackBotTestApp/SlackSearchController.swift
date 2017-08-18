@@ -17,7 +17,6 @@ protocol SlackTableViewCell {
 
 protocol SlackViewController {
     var slackStore: SlackStore? { get set }
-    var webAPI: WebAPI? { get set }
     var filteredUsers: [User]? { get set }
 }
 

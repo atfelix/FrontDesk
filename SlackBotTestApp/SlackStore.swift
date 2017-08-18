@@ -9,6 +9,12 @@
 import SKCore
 import SKWebAPI
 
+public typealias FailureClosure = (_ error: SlackError) -> Void
+
+public enum ParseMode: String {
+    case full, none
+}
+
 class SlackStore {
     private var channels = [Channel]()
     var sortedChannels: [Channel] {
@@ -62,5 +68,35 @@ class SlackStore {
                     print(error)
             })
         }
+    }
+}
+
+extension SlackStore {
+    func sendMessage(
+        channel: String,
+        text: String,
+        username: String? = nil,
+        asUser: Bool? = nil,
+        linkNames: Bool? = nil,
+        attachments: [Attachment?]? = nil,
+        unfurlLinks: Bool? = nil,
+        unfurlMedia: Bool? = nil,
+        iconURL: String? = nil,
+        iconEmoji: String? = nil,
+        success: (((ts: String?, channel: String?)) -> Void)?,
+        failure: FailureClosure?
+    ) {
+        self.webAPI.sendMessage(channel: channel,
+                                text: text,
+                                username: username,
+                                asUser: asUser,
+                                linkNames: linkNames,
+                                attachments: attachments,
+                                unfurlLinks: unfurlLinks,
+                                unfurlMedia: unfurlMedia,
+                                iconURL: iconURL,
+                                iconEmoji: iconEmoji,
+                                success: success,
+                                failure: failure)
     }
 }

@@ -29,16 +29,6 @@ class MeetingViewController: UIViewController, SlackViewController {
         }
     }
 
-    var _webAPI: WebAPI?
-    var webAPI: WebAPI? {
-        get {
-            return self._webAPI
-        }
-        set {
-            self._webAPI = newValue
-        }
-    }
-
     var _filteredUsers: [User]?
     var filteredUsers: [User]? {
         get {
@@ -96,16 +86,16 @@ class MeetingViewController: UIViewController, SlackViewController {
         DispatchQueue.global(qos: .background).async {
             for indexPath in indexPaths {
                 sleep(2)
-                self.webAPI?.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
-                                        text: "",
-                                        linkNames: true,
-                                        attachments: Attachment.meetingAttachment(for: self.tableView.cellForRow(at: indexPath) as! MeetingTableViewCell,
-                                                                                  name: name,
-                                                                                  from: company,
-                                                                                  with: email),
-                                        success: nil,
-                                        failure: { error in
-                                            print(error)
+                self.slackStore?.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
+                                             text: "",
+                                             linkNames: true,
+                                             attachments: Attachment.meetingAttachment(for: self.tableView.cellForRow(at: indexPath) as! MeetingTableViewCell,
+                                                                                       name: name,
+                                                                                       from: company,
+                                                                                       with: email),
+                                             success: nil,
+                                             failure: { error in
+                                                print(error)
                 })
             }
         }
