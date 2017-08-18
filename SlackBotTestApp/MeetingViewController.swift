@@ -38,25 +38,11 @@ class MeetingViewController: UIViewController, SlackViewController {
             self._filteredUsers = newValue
         }
     }
-    var currentFocusIndex = 0 {
+    var currentFocusIndex = 1 {
         didSet {
-            if self.currentFocusIndex > 4 {
-                self.currentFocusIndex = 1
-            }
-            else if self.currentFocusIndex < 1 {
+            self.currentFocusIndex = ((self.currentFocusIndex + 4) % 4)
+            if self.currentFocusIndex == 0 {
                 self.currentFocusIndex = 4
-            }
-
-            if self.currentFocusIndex == 4 {
-                self.searchController.searchBar.becomeFirstResponder()
-                return
-            }
-
-            for view in self.view.subviews {
-                if view.tag == self.currentFocusIndex {
-                    view.becomeFirstResponder()
-                    return
-                }
             }
         }
     }
@@ -92,6 +78,7 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.filterContentForScope(index: 0)
         self.setupDelegates()
         self.setupTags()
+        self.determineFirstResponder()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -171,15 +158,29 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.companyLabel.tag = 2
         self.emailLabel.tag = 3
         self.searchController.searchBar.tag = 4
-        self.currentFocusIndex = 1
+    }
+
+    func determineFirstResponder() {
+        if self.currentFocusIndex == 4 {
+            self.searchController.searchBar.becomeFirstResponder()
+            return
+        }
+
+        for subview in self.view.subviews {
+            if subview.tag == self.currentFocusIndex {
+                subview.becomeFirstResponder()
+            }
+        }
     }
 
     func previousButtonTapped(_ sender: UIBarButtonItem) {
         self.currentFocusIndex -= 1
+        self.determineFirstResponder()
     }
 
     func nextButtonTapped(_ sender: UIBarButtonItem) {
         self.currentFocusIndex += 1
+        self.determineFirstResponder()
     }
 }
 
@@ -207,6 +208,7 @@ extension MeetingViewController : UISearchResultsUpdating {
 extension MeetingViewController: UISearchBarDelegate {
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        self.currentFocusIndex = searchBar.tag
         searchBar.inputAccessoryView = self.previousNextToolbar
         return true
     }
@@ -240,13 +242,14 @@ extension MeetingViewController: UISearchBarDelegate {
 
 extension MeetingViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        self.currentFocusIndex = textField.tag
         textField.inputAccessoryView = self.previousNextToolbar
         return true
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.currentFocusIndex += 1
-
+        self.determineFirstResponder()
         return true
     }
 }
