@@ -13,13 +13,13 @@ class ChannelStore {
     private var channels = [Channel]()
     var sortedChannels: [Channel] {
         get {
-            return self.channels.sorted { ($0.name)! < ($1.name)! }
+            return self.channels.sorted { $0.defaultName < $1.defaultName }
         }
     }
     private var users = Set<User>()
     var usersArray: [User] {
         get {
-            return self.users.sorted { ($0.profile?.realName)! < ($1.profile?.realName)! }
+            return self.users.sorted { $0.defaultRealName < $1.defaultRealName }
         }
     }
     let webAPI: WebAPI
@@ -31,9 +31,13 @@ class ChannelStore {
 
     private func getChannels() {
         self.webAPI.channelsList(success: { [weak self] (channelArray) in
-            for channelDict in channelArray! {
+            guard let channelArray = channelArray else { return }
+
+            for channelDict in channelArray {
                 let channel = Channel(channel: channelDict)
-                self?.webAPI.channelInfo(id: channel.id!,
+                guard let id = channel.id else { continue }
+
+                self?.webAPI.channelInfo(id: id,
                                          success: { (channel) in
                                             self?.channels.append(channel)
                                             self?.getUsers(for: channel)

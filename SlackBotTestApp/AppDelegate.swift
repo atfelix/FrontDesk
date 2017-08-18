@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.setupAppearance()
-        let navController = window!.rootViewController as! UINavigationController
+        let navController = self.window?.rootViewController as! UINavigationController
         let decisionVC = navController.topViewController as! DecisionViewController
         decisionVC.channelStore = ChannelStore(token: SLACK_API_KEY)
         return true

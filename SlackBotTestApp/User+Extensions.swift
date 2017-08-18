@@ -20,3 +20,17 @@ extension User : Equatable, Hashable {
         }
     }
 }
+
+extension User {
+    var defaultName: String {
+        get {
+            return self.name ?? "NO NAME"
+        }
+    }
+
+    var defaultRealName: String {
+        get {
+            return self.profile?.realName ?? "NO REAL NAME"
+        }
+    }
+}

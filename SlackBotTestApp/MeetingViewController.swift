@@ -48,14 +48,42 @@ class MeetingViewController: UIViewController, SlackViewController {
             self._filteredUsers = newValue
         }
     }
+    var currentFocusIndex = 0 {
+        didSet {
+            if self.currentFocusIndex > 4 {
+                self.currentFocusIndex = 1
+            }
+            else if self.currentFocusIndex < 1 {
+                self.currentFocusIndex = 4
+            }
+
+            if self.currentFocusIndex == 4 {
+                self.searchController.searchBar.becomeFirstResponder()
+                return
+            }
+
+            for view in self.view.subviews {
+                if view.tag == self.currentFocusIndex {
+                    view.becomeFirstResponder()
+                    return
+                }
+            }
+        }
+    }
 
     lazy var previousNextToolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
         toolbar.sizeToFit()
 
-        let previousBarButtonItem = UIBarButtonItem(title: "Previous", style: .plain, target: self, action: nil)
-        let nextBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: nil)
+        let previousBarButtonItem = UIBarButtonItem(title: "Previous",
+                                                    style: .plain,
+                                                    target: self,
+                                                    action: #selector(MeetingViewController.previousButtonTapped(_:)))
+        let nextBarButtonItem = UIBarButtonItem(title: "Next",
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(MeetingViewController.nextButtonTapped(_:)))
 
         toolbar.setItems([previousBarButtonItem, nextBarButtonItem], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -67,12 +95,13 @@ class MeetingViewController: UIViewController, SlackViewController {
 
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
-                                                    with: self.channelStore?.sortedChannels.map { $0.name! })
+                                                    with: self.slackStore?.sortedChannels.map { $0.defaultName })
 
         self.setupNavigationItem()
         self.definesPresentationContext = true
         self.filterContentForScope(index: 0)
         self.setupDelegates()
+        self.setupTags()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -146,6 +175,22 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.companyLabel.delegate = self
         self.emailLabel.delegate = self
     }
+
+    private func setupTags() {
+        self.nameLabel.tag = 1
+        self.companyLabel.tag = 2
+        self.emailLabel.tag = 3
+        self.searchController.searchBar.tag = 4
+        self.currentFocusIndex = 1
+    }
+
+    func previousButtonTapped(_ sender: UIBarButtonItem) {
+        self.currentFocusIndex -= 1
+    }
+
+    func nextButtonTapped(_ sender: UIBarButtonItem) {
+        self.currentFocusIndex += 1
+    }
 }
 
 extension MeetingViewController: UITableViewDataSource {
@@ -170,6 +215,11 @@ extension MeetingViewController : UISearchResultsUpdating {
 }
 
 extension MeetingViewController: UISearchBarDelegate {
+
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.inputAccessoryView = self.previousNextToolbar
+        return true
+    }
 
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "" {
@@ -205,15 +255,7 @@ extension MeetingViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == self.nameLabel {
-            self.companyLabel.becomeFirstResponder()
-        }
-        else if textField == self.companyLabel {
-            self.emailLabel.becomeFirstResponder()
-        }
-        else if textField == self.emailLabel {
-            self.searchController.searchBar.becomeFirstResponder()
-        }
+        self.currentFocusIndex += 1
 
         return true
     }

@@ -50,7 +50,7 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
-                                                    with: self.channelStore?.sortedChannels.map { $0.name! })
+                                                    with: self.slackStore?.sortedChannels.map { $0.defaultName })
 
         self.setupNavigationItem()
         self.definesPresentationContext = true
@@ -142,10 +142,9 @@ extension DeliveryViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "" {
-            self.filterContentForScope(index: searchBar.selectedScopeButtonIndex)
             let searchText = searchBar.text ?? ""
-            let splice = String(searchText.characters.dropLast())
-            self.filterContentForSearchText(searchText: splice)
+            self.filterContent(index: searchBar.selectedScopeButtonIndex,
+                               searchText: String(searchText.characters.dropLast()))
             self.reloadData()
         }
         return true
@@ -160,9 +159,13 @@ extension DeliveryViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         guard let text = searchBar.text else { return }
-        self.filterContentForScope(index: selectedScope)
-        self.filterContentForSearchText(searchText: text)
+        self.filterContent(index: selectedScope, searchText: text)
         self.reloadData()
+    }
+
+    private func filterContent(index: Int, searchText: String) {
+        self.filterContentForScope(index: index)
+        self.filterContentForSearchText(searchText: searchText)
     }
 }
 
