@@ -32,12 +32,17 @@ class SlackStore {
 
     init(token: String) {
         self.webAPI = WebAPI(token: token)
+    }
+
+    func update() {
         self.getChannels()
     }
 
     private func getChannels() {
         self.webAPI.channelsList(success: { [weak self] (channelArray) in
             guard let channelArray = channelArray else { return }
+
+            self?.channels.removeAll(keepingCapacity: true)
 
             for channelDict in channelArray {
                 let channel = Channel(channel: channelDict)

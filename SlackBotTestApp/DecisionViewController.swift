@@ -21,6 +21,11 @@ class DecisionViewController: UIViewController {
         self.setupButtons()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.slackStore.update()
+    }
+
     private func setupButtons() {
         self.setupDeliveryButton()
         self.setupMeetingButton()
