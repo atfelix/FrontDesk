@@ -99,20 +99,33 @@ class MeetingViewController: UIViewController, SlackViewController {
                 return
         }
 
+        let channel = scopeButtons[searchBar.selectedScopeButtonIndex]
+
         DispatchQueue.global(qos: .background).async {
             for indexPath in indexPaths {
+                guard
+                    let cell = self.tableView.cellForRow(at: indexPath) as? MeetingTableViewCell,
+                    let user = cell.user else {
+                        continue
+                }
+
                 sleep(2)
-                self.slackStore?.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
-                                             text: "",
-                                             linkNames: true,
-                                             attachments: Attachment.meetingAttachment(for: self.tableView.cellForRow(at: indexPath) as! MeetingTableViewCell,
-                                                                                       name: name,
-                                                                                       from: company,
-                                                                                       with: email),
-                                             success: nil,
-                                             failure: { error in
-                                                print(error)
-                })
+                self.slackStore?.sendMessageToUserOrChannel(to: user,
+                                                            channel: channel,
+                                                            regularAttachments: Attachment.meetingAttachment(for: cell,
+                                                                                                             name: name,
+                                                                                                             from: company,
+                                                                                                             with: email),
+                                                            awayAttachments:Attachment.awayMeetingAttachment(for: cell,
+                                                                                                             channel: channel,
+                                                                                                             name: name,
+                                                                                                             from: company,
+                                                                                                             with: email),
+                                                            dndAttachments:Attachment.dndMeetingAttachment(for: cell,
+                                                                                                           channel: channel,
+                                                                                                           name: name,
+                                                                                                           from: company,
+                                                                                                           with: email))
             }
         }
     }

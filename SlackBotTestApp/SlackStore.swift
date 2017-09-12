@@ -6,6 +6,7 @@
 //  Copyright © 2017 Adam Felix. All rights reserved.
 //
 
+import Foundation
 import SKCore
 import SKWebAPI
 
@@ -29,6 +30,7 @@ class SlackStore {
         }
     }
     let webAPI: WebAPI
+
 
     init(token: String) {
         self.webAPI = WebAPI(token: token)
@@ -72,7 +74,6 @@ class SlackStore {
                 }
 
                 self?.users.insert(user)
-                print("user: \(userIdString)")
                 }, failure: { (error) in
                     print(error)
             })
@@ -81,7 +82,67 @@ class SlackStore {
 }
 
 extension SlackStore {
-    func sendMessage(
+    func sendMessageToUserOrChannel(
+        to user: User,
+        channel: String,
+        regularAttachments: [Attachment]? = nil,
+        awayAttachments: [Attachment]? = nil,
+        dndAttachments: [Attachment]? = nil
+    ) {
+        guard let userId = user.id else { return }
+
+        self.dndInfo(user: userId, success: { (status) in
+            let timestamp = Date().slackTimestamp
+            if
+                let dndStart = status.nextDoNotDisturbStart,
+                let dndEnd = status.nextDoNotDisturbEnd,
+                Double(dndStart) <= timestamp && timestamp <= Double(dndEnd) {
+                self.sendMessage(channel: channel,
+                                 text: "",
+                                 asUser: true,
+                                 linkNames: true,
+                                 attachments: dndAttachments,
+                                 success: nil,
+                                 failure: { (error) in
+                                    print(error)
+                })
+            }
+            else {
+                self.userPresence(user: userId, success: {[weak self]
+                    (presence) in
+                    if presence == "away" {
+                        self?.sendMessage(channel: channel,
+                                          text: "",
+                                          asUser: true,
+                                          linkNames: true,
+                                          attachments: awayAttachments,
+                                          success: nil,
+                                          failure: { (error) in
+                                            print(error)
+                        })
+                    }
+                    else {
+                        self?.sendMessage(channel: "@\(userId)",
+                                          text: "",
+                                          asUser: true,
+                                          linkNames: true,
+                                          attachments: regularAttachments,
+                                          success: nil,
+                                          failure: { error in
+                                            print(error)
+                        })
+
+                    }
+                    }, failure: { (error) in
+                        print(error)
+                })
+            }
+        }, failure: { (error) in
+            print(error)
+        })
+    }
+
+    private func sendMessage(
         channel: String,
         text: String,
         username: String? = nil,
@@ -107,5 +168,25 @@ extension SlackStore {
                                 iconEmoji: iconEmoji,
                                 success: success,
                                 failure: failure)
+    }
+
+    private func userPresence(
+        user: String,
+        success: ((_ presence: String?) -> Void)?,
+        failure: FailureClosure?
+    ) {
+        self.webAPI.userPresence(user: user,
+                                 success: success,
+                                 failure: failure)
+    }
+
+    private func dndInfo(
+        user: String? = nil,
+        success: ((_ status: DoNotDisturbStatus) -> Void)?,
+        failure: FailureClosure?
+    ) {
+        self.webAPI.dndInfo(user: user,
+                            success: success,
+                            failure: failure)
     }
 }

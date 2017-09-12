@@ -62,15 +62,22 @@ class DeliveryViewController: UIViewController, SlackViewController {
                 return
         }
 
+        let channel = scopeButtons[searchBar.selectedScopeButtonIndex];
+
         DispatchQueue.global(qos: .background).async {
             for indexPath in indexPaths {
                 sleep(2)
-                self.slackStore?.sendMessage(channel: scopeButtons[searchBar.selectedScopeButtonIndex],
-                                             text: "",
-                                             linkNames: true,
-                                             attachments: Attachment.deliveryAttachment(for: self.tableView.cellForRow(at: indexPath) as! DeliveryTableViewCell),
-                                             success: nil,
-                                             failure: nil)
+                guard
+                    let cell = self.tableView.cellForRow(at: indexPath) as? DeliveryTableViewCell,
+                    let user = cell.user else {
+                        continue
+                }
+
+                self.slackStore?.sendMessageToUserOrChannel(to: user,
+                                                            channel: channel,
+                                                            regularAttachments: Attachment.regularDeliveryAttachment(for: cell),
+                                                            awayAttachments:Attachment.awayDeliveryAttachement(for: cell, channel: channel),
+                                                            dndAttachments:Attachment.dndDeliveryAttachement(for: cell, channel: channel))
             }
         }
     }

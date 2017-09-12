@@ -33,4 +33,10 @@ extension User {
             return self.profile?.realName ?? "NO REAL NAME"
         }
     }
+
+    var defaultPresence: String {
+        get {
+            return self.presence ?? self.profile?.customProfile?.fields["presence"]?.value ?? "no presence"
+        }
+    }
 }
