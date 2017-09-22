@@ -95,7 +95,8 @@ class MeetingViewController: UIViewController, SlackViewController {
             let scopeButtons = searchBar.scopeButtonTitles,
             let name = self.nameLabel.text,
             let company = self.companyLabel.text,
-            let email = self.emailLabel.text else {
+            let email = self.emailLabel.text,
+            !name.isEmpty && !email.isEmpty && String.isValid(email: email) else {
                 return
         }
 
@@ -109,7 +110,6 @@ class MeetingViewController: UIViewController, SlackViewController {
                         continue
                 }
 
-                sleep(2)
                 self.slackStore?.sendMessageToUserOrChannel(to: user,
                                                             channel: channel,
                                                             regularAttachments: Attachment.meetingAttachment(for: cell,
@@ -150,12 +150,25 @@ class MeetingViewController: UIViewController, SlackViewController {
         }
     }
 
+    func updateNotifyButton() {
+        guard
+            let name = self.nameLabel.text,
+            let email = self.emailLabel.text else {
+                self.notifyButton.isEnabled = false
+                return
+        }
+
+        self.notifyButton.isEnabled = (self.tableView.indexPathsForSelectedRows != nil
+            && !name.isEmpty && !email.isEmpty && String.isValid(email: email))
+    }
+
     private func setupNavigationItem() {
         self.navigationItem.title = "Meeting"
         self.notifyButton = UIBarButtonItem(barButtonSystemItem: .action,
                                             target: self,
                                             action: #selector(MeetingViewController.notifyButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = self.notifyButton
+        self.notifyButton.isEnabled = false
         self.automaticallyAdjustsScrollViewInsets = false
     }
 
@@ -216,6 +229,16 @@ extension MeetingViewController: UITableViewDataSource {
     }
 }
 
+extension MeetingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.updateNotifyButton()
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        self.updateNotifyButton()
+    }
+}
+
 extension MeetingViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
@@ -243,6 +266,7 @@ extension MeetingViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.updateNotifyButton()
         if searchBar.text != "" {
             self.filterContentForSearchText(searchText: searchBar.text ?? "")
             self.reloadData()
@@ -253,6 +277,7 @@ extension MeetingViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         self.filterContent(index: selectedScope, searchText: text)
         self.reloadData()
+        self.updateNotifyButton()
     }
 }
 
@@ -266,6 +291,11 @@ extension MeetingViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.currentFocusIndex += 1
         self.determineFirstResponder()
+        return true
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.updateNotifyButton()
         return true
     }
 }

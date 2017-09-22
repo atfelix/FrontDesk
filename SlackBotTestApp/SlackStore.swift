@@ -41,6 +41,7 @@ class SlackStore {
     }
 
     private func getChannels() {
+        sleep(1)
         self.webAPI.channelsList(success: { [weak self] (channelArray) in
             guard let channelArray = channelArray else { return }
 
@@ -49,6 +50,8 @@ class SlackStore {
             for channelDict in channelArray {
                 let channel = Channel(channel: channelDict)
                 guard let id = channel.id else { continue }
+
+                sleep(1)
 
                 self?.webAPI.channelInfo(id: id,
                                          success: { (channel) in
@@ -65,6 +68,7 @@ class SlackStore {
         guard let members = channel.members else { return }
 
         for userIdString in members {
+            sleep(1)
             self.webAPI.userInfo(id: userIdString, success: { [weak self] (user) in
                 guard
                     let isBot = user.isBot,
@@ -156,6 +160,7 @@ extension SlackStore {
         success: (((ts: String?, channel: String?)) -> Void)?,
         failure: FailureClosure?
     ) {
+        sleep(1)
         self.webAPI.sendMessage(channel: channel,
                                 text: text,
                                 username: username,
@@ -175,6 +180,7 @@ extension SlackStore {
         success: ((_ presence: String?) -> Void)?,
         failure: FailureClosure?
     ) {
+        sleep(1)
         self.webAPI.userPresence(user: user,
                                  success: success,
                                  failure: failure)
@@ -185,6 +191,7 @@ extension SlackStore {
         success: ((_ status: DoNotDisturbStatus) -> Void)?,
         failure: FailureClosure?
     ) {
+        sleep(1)
         self.webAPI.dndInfo(user: user,
                             success: success,
                             failure: failure)
