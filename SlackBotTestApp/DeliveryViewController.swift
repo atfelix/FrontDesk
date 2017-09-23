@@ -44,12 +44,13 @@ class DeliveryViewController: UIViewController, SlackViewController {
         self.setupNavigationItem()
         self.definesPresentationContext = true
         self.searchController.searchBar.delegate = self
+        self.searchController.delegate = self
         self.filterContentForScope(index: 0)
+        self.registerKeyboardNotifications()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         self.searchController.isActive = true
-        self.searchController.searchBar.becomeFirstResponder()
     }
 
     func notifyButtonTapped(_ sender: UIButton) {
@@ -120,17 +121,46 @@ class DeliveryViewController: UIViewController, SlackViewController {
     func updateNotifyButton() {
         self.notifyButton.isEnabled = self.tableView.indexPathsForSelectedRows != nil
     }
+
+    func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MeetingViewController.keyboardWillShow),
+                                               name: .UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MeetingViewController.keyboardWillHide),
+                                               name: .UIKeyboardWillHide,
+                                               object: nil)
+    }
+
+    func keyboardWillShow(_ notification: Notification) {
+        guard let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        self.tableView.frame = CGRect(x: self.tableView.frame.origin.x,
+                                      y: self.tableView.frame.origin.y,
+                                      width: self.tableView.frame.width,
+                                      height: self.tableView.frame.height - rect.height)
+    }
+
+    func keyboardWillHide(_ notification: Notification) {
+        guard let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        self.tableView.frame = CGRect(x: self.tableView.frame.origin.x,
+                                      y: self.tableView.frame.origin.y,
+                                      width: self.tableView.frame.width,
+                                      height: self.tableView.frame.height + rect.height)
+    }
 }
 
 extension DeliveryViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.searchController.searchBarIsActive()) ? (self.filteredUsers?.count ?? 0) : (self.slackStore?.usersArray.count ?? 0)
+        return self.filteredUsers?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "DeliveryCell", for: indexPath) as! SlackTableViewCell
-        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers?[indexPath.row] : self.slackStore?.usersArray[indexPath.row]
+        cell.user = self.filteredUsers?[indexPath.row]
         cell.displayCell()
         return cell as! UITableViewCell
     }
@@ -182,3 +212,8 @@ extension DeliveryViewController: UISearchBarDelegate {
     }
 }
 
+extension DeliveryViewController: UISearchControllerDelegate {
+    func didPresentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.becomeFirstResponder()
+    }
+}

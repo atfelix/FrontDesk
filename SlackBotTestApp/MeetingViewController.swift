@@ -79,10 +79,10 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.setupDelegates()
         self.setupTags()
         self.determineFirstResponder()
+        self.registerKeyboardNotifications()
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        self.nameLabel.becomeFirstResponder()
         self.searchController.isActive = true
     }
 
@@ -213,17 +213,46 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.filterContentForScope(index: index)
         self.filterContentForSearchText(searchText: searchText)
     }
+
+    func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MeetingViewController.keyboardWillShow),
+                                               name: .UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MeetingViewController.keyboardWillHide),
+                                               name: .UIKeyboardWillHide,
+                                               object: nil)
+    }
+
+    func keyboardWillShow(_ notification: Notification) {
+        guard let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        self.tableView.frame = CGRect(x: self.tableView.frame.origin.x,
+                                      y: self.tableView.frame.origin.y,
+                                      width: self.tableView.frame.width,
+                                      height: self.tableView.frame.height - rect.height)
+    }
+
+    func keyboardWillHide(_ notification: Notification) {
+        guard let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        self.tableView.frame = CGRect(x: self.tableView.frame.origin.x,
+                                      y: self.tableView.frame.origin.y,
+                                      width: self.tableView.frame.width,
+                                      height: self.tableView.frame.height + rect.height)
+    }
 }
 
 extension MeetingViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.searchController.searchBarIsActive()) ? (self.filteredUsers?.count ?? 0) : (self.slackStore?.usersArray.count ?? 0)
+        return self.filteredUsers?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MeetingCell", for: indexPath) as! MeetingTableViewCell
-        cell.user = (self.searchController.searchBarIsActive()) ? self.filteredUsers?[indexPath.row] : self.slackStore?.usersArray[indexPath.row]
+        cell.user = self.filteredUsers?[indexPath.row]
         cell.displayCell()
         return cell
     }

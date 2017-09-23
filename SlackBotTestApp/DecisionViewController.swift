@@ -48,7 +48,6 @@ class DecisionViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var vc = segue.destination as! SlackViewController
         vc.slackStore = self.slackStore
-        vc.filteredUsers = self.slackStore.usersArray
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Welcome to LL && DH",
                                                                 style: .done,
                                                                 target: nil,

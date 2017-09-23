@@ -20,13 +20,13 @@ class SlackStore {
     private var channels = [Channel]()
     var sortedChannels: [Channel] {
         get {
-            return self.channels.sorted { $0.defaultName < $1.defaultName }
+            return self.channels.sorted { $0.defaultName.lowercased() < $1.defaultName.lowercased() }
         }
     }
     private var users = Set<User>()
     var usersArray: [User] {
         get {
-            return self.users.sorted { $0.defaultRealName < $1.defaultRealName }
+            return self.users.sorted { $0.defaultRealName.lowercased() < $1.defaultRealName.lowercased() }
         }
     }
     let webAPI: WebAPI
@@ -41,7 +41,6 @@ class SlackStore {
     }
 
     private func getChannels() {
-        sleep(1)
         self.webAPI.channelsList(success: { [weak self] (channelArray) in
             guard let channelArray = channelArray else { return }
 
@@ -50,8 +49,6 @@ class SlackStore {
             for channelDict in channelArray {
                 let channel = Channel(channel: channelDict)
                 guard let id = channel.id else { continue }
-
-                sleep(1)
 
                 self?.webAPI.channelInfo(id: id,
                                          success: { (channel) in
@@ -68,7 +65,6 @@ class SlackStore {
         guard let members = channel.members else { return }
 
         for userIdString in members {
-            sleep(1)
             self.webAPI.userInfo(id: userIdString, success: { [weak self] (user) in
                 guard
                     let isBot = user.isBot,
@@ -160,7 +156,6 @@ extension SlackStore {
         success: (((ts: String?, channel: String?)) -> Void)?,
         failure: FailureClosure?
     ) {
-        sleep(1)
         self.webAPI.sendMessage(channel: channel,
                                 text: text,
                                 username: username,
@@ -173,6 +168,7 @@ extension SlackStore {
                                 iconEmoji: iconEmoji,
                                 success: success,
                                 failure: failure)
+        sleep(1)
     }
 
     private func userPresence(
@@ -180,10 +176,10 @@ extension SlackStore {
         success: ((_ presence: String?) -> Void)?,
         failure: FailureClosure?
     ) {
-        sleep(1)
         self.webAPI.userPresence(user: user,
                                  success: success,
                                  failure: failure)
+        sleep(1)
     }
 
     private func dndInfo(
@@ -191,9 +187,9 @@ extension SlackStore {
         success: ((_ status: DoNotDisturbStatus) -> Void)?,
         failure: FailureClosure?
     ) {
-        sleep(1)
         self.webAPI.dndInfo(user: user,
                             success: success,
                             failure: failure)
+        sleep(1)
     }
 }
