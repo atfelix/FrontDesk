@@ -41,7 +41,7 @@
 		11ACB9E81F47382B00C16373 /* Channel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ACB9E71F47382B00C16373 /* Channel+Extensions.swift */; };
 		11ACB9EA1F475AED00C16373 /* UIButton+DecisionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ACB9E91F475AED00C16373 /* UIButton+DecisionButton.swift */; };
 		11EDFAC01F38DDD60040E312 /* User+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFABF1F38DDD60040E312 /* User+Extensions.swift */; };
-		11EDFAC21F393EDA0040E312 /* SlackStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFAC11F393EDA0040E312 /* SlackStore.swift */; };
+		11EDFAC21F393EDA0040E312 /* SlackChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDFAC11F393EDA0040E312 /* SlackChannel.swift */; };
 		11F4C59C1F3F64BD00119141 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F4C59B1F3F64BD00119141 /* MeetingTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -116,7 +116,7 @@
 		11ACB9E71F47382B00C16373 /* Channel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Channel+Extensions.swift"; sourceTree = "<group>"; };
 		11ACB9E91F475AED00C16373 /* UIButton+DecisionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+DecisionButton.swift"; sourceTree = "<group>"; };
 		11EDFABF1F38DDD60040E312 /* User+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Extensions.swift"; sourceTree = "<group>"; };
-		11EDFAC11F393EDA0040E312 /* SlackStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackStore.swift; sourceTree = "<group>"; };
+		11EDFAC11F393EDA0040E312 /* SlackChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackChannel.swift; sourceTree = "<group>"; };
 		11F4C59B1F3F64BD00119141 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,7 +195,7 @@
 				113DB41D1F3FEC210038FEB5 /* MeetingViewController.swift */,
 				112F93201F68635D00C8E540 /* String+Validation.swift */,
 				117242DE1F4492AE00BF4941 /* SlackSearchController.swift */,
-				11EDFAC11F393EDA0040E312 /* SlackStore.swift */,
+				11EDFAC11F393EDA0040E312 /* SlackChannel.swift */,
 				11EDFABF1F38DDD60040E312 /* User+Extensions.swift */,
 				11ACB9E71F47382B00C16373 /* Channel+Extensions.swift */,
 				11ACB9E91F475AED00C16373 /* UIButton+DecisionButton.swift */,
@@ -370,7 +370,7 @@
 				11ACB9E81F47382B00C16373 /* Channel+Extensions.swift in Sources */,
 				113DB41E1F3FEC210038FEB5 /* MeetingViewController.swift in Sources */,
 				113D8C961F30D15200A03AA7 /* DeliveryViewController.swift in Sources */,
-				11EDFAC21F393EDA0040E312 /* SlackStore.swift in Sources */,
+				11EDFAC21F393EDA0040E312 /* SlackChannel.swift in Sources */,
 				113D8C491F2F8C3E00A03AA7 /* AppDelegate.swift in Sources */,
 				11F4C59C1F3F64BD00119141 /* MeetingTableViewCell.swift in Sources */,
 				11EDFAC01F38DDD60040E312 /* User+Extensions.swift in Sources */,

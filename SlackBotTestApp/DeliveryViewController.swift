@@ -15,13 +15,13 @@ class DeliveryViewController: UIViewController, SlackViewController {
     var notifyButton: UIBarButtonItem!
     let searchController = SlackSearchController(searchResultsController: nil)
 
-    var _slackStore: SlackStore?
-    var slackStore: SlackStore? {
+    var _slackChannel: SlackChannel?
+    var slackChannel: SlackChannel? {
         get {
-            return self._slackStore
+            return self._slackChannel
         }
         set {
-            self._slackStore = newValue
+            self._slackChannel = newValue
         }
     }
 
@@ -40,7 +40,7 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
-                                                    with: self.slackStore?.sortedChannels.map { $0.defaultName })
+                                                    with: self.slackChannel?.sortedChannels.map { $0.defaultName })
         self.setupNavigationItem()
         self.definesPresentationContext = true
         self.searchController.searchBar.delegate = self
@@ -73,7 +73,7 @@ class DeliveryViewController: UIViewController, SlackViewController {
                         continue
                 }
 
-                self.slackStore?.sendMessageToUserOrChannel(to: user,
+                self.slackChannel?.sendMessageToUserOrChannel(to: user,
                                                             channel: channel,
                                                             regularAttachments: Attachment.regularDeliveryAttachment(for: cell),
                                                             awayAttachments:Attachment.awayDeliveryAttachement(for: cell, channel: channel),
@@ -98,8 +98,8 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
     func filterContentForScope(index: Int) {
 
-        guard let filteredUsers = self.searchController.filter(content: self.slackStore?.usersArray,
-                                                               in: self.slackStore,
+        guard let filteredUsers = self.searchController.filter(content: self.slackChannel?.usersArray,
+                                                               in: self.slackChannel,
                                                                for: index) else {
                                                                 return
         }

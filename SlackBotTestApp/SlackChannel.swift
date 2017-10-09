@@ -1,5 +1,5 @@
 //
-//  SlackStore.swift
+//  SlackChannel.swift
 //  SlackBotTestApp
 //
 //  Created by atfelix on 2017-08-07.
@@ -16,7 +16,7 @@ public enum ParseMode: String {
     case full, none
 }
 
-class SlackStore {
+class SlackChannel {
     private var channels = [Channel]()
     var sortedChannels: [Channel] {
         get {
@@ -81,7 +81,7 @@ class SlackStore {
     }
 }
 
-extension SlackStore {
+extension SlackChannel {
     func sendMessageToUserOrChannel(
         to user: User,
         channel: String,

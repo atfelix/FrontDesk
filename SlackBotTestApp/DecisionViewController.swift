@@ -14,7 +14,7 @@ class DecisionViewController: UIViewController {
     @IBOutlet weak var deliveryButton: UIButton!
     @IBOutlet weak var meetingButton: UIButton!
 
-    var slackStore: SlackStore!
+    var slackChannel: SlackChannel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class DecisionViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.slackStore.update()
+        self.slackChannel.update()
     }
 
     private func setupButtons() {
@@ -47,7 +47,7 @@ class DecisionViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var vc = segue.destination as! SlackViewController
-        vc.slackStore = self.slackStore
+        vc.slackChannel = self.slackChannel
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Welcome to LL && DH",
                                                                 style: .done,
                                                                 target: nil,
