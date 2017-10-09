@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11106BE21F8C29AE00BE2282 /* SlackSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11106BE11F8C29AE00BE2282 /* SlackSearchBar.swift */; };
 		112F931F1F685CDD00C8E540 /* Devhub-lighthouselabs-logo (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 112F931E1F685CDD00C8E540 /* Devhub-lighthouselabs-logo (1).png */; };
 		112F93211F68635D00C8E540 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112F93201F68635D00C8E540 /* String+Validation.swift */; };
 		113D8C491F2F8C3E00A03AA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D8C481F2F8C3E00A03AA7 /* AppDelegate.swift */; };
@@ -84,6 +85,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11106BE11F8C29AE00BE2282 /* SlackSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlackSearchBar.swift; sourceTree = "<group>"; };
 		112F931E1F685CDD00C8E540 /* Devhub-lighthouselabs-logo (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Devhub-lighthouselabs-logo (1).png"; sourceTree = "<group>"; };
 		112F93201F68635D00C8E540 /* String+Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
 		113D8C451F2F8C3E00A03AA7 /* SlackBotTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlackBotTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +197,7 @@
 				113DB41D1F3FEC210038FEB5 /* MeetingViewController.swift */,
 				112F93201F68635D00C8E540 /* String+Validation.swift */,
 				117242DE1F4492AE00BF4941 /* SlackSearchController.swift */,
+				11106BE11F8C29AE00BE2282 /* SlackSearchBar.swift */,
 				11EDFAC11F393EDA0040E312 /* SlackChannel.swift */,
 				11EDFABF1F38DDD60040E312 /* User+Extensions.swift */,
 				11ACB9E71F47382B00C16373 /* Channel+Extensions.swift */,
@@ -295,15 +298,18 @@
 					113D8C441F2F8C3E00A03AA7 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = D3RJBXXU45;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					113D8C581F2F8C3E00A03AA7 = {
 						CreatedOnToolsVersion = 8.3.3;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 113D8C441F2F8C3E00A03AA7;
 					};
 					113D8C631F2F8C3E00A03AA7 = {
 						CreatedOnToolsVersion = 8.3.3;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 113D8C441F2F8C3E00A03AA7;
 					};
@@ -364,6 +370,7 @@
 			files = (
 				113D8C921F2FB09E00A03AA7 /* DecisionViewController.swift in Sources */,
 				113F378B1F435940006E4E4D /* API_KEY.swift in Sources */,
+				11106BE21F8C29AE00BE2282 /* SlackSearchBar.swift in Sources */,
 				117242DF1F4492AE00BF4941 /* SlackSearchController.swift in Sources */,
 				11679D601F3CD82300E47F90 /* Attachment+Extensions.swift in Sources */,
 				11ACB9EA1F475AED00C16373 /* UIButton+DecisionButton.swift in Sources */,

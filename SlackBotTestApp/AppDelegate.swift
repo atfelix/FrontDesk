@@ -25,8 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupAppearance() {
         self.window?.tintColor = .black
         UISearchBar.appearance().barTintColor = .white
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self]).textColor = .white
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self]).backgroundColor = .black
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self, UISearchBar.self]).tintColor = .white
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self, UISearchBar.self]).backgroundColor = .black
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self, UISearchBar.self])
         UISwitch.appearance().tintColor = .black
         UISwitch.appearance().onTintColor = .black
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.black], for: .normal)

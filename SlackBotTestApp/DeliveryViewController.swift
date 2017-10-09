@@ -40,6 +40,7 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
+                                                    in: self.navigationItem,
                                                     with: self.slackChannel?.sortedChannels.map { $0.defaultName })
         self.setupNavigationItem()
         self.definesPresentationContext = true

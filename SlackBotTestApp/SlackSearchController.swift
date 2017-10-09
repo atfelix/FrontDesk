@@ -22,20 +22,35 @@ protocol SlackViewController {
 
 class SlackSearchController: UISearchController {
 
-    func setupSearchController<T: UISearchResultsUpdating>(in viewController: T, with tableView: UITableView, with scopeButtonTitles: [String]?) {
+    lazy var _searchBar: SlackSearchBar = { [unowned self] in
+        let searchBar = SlackSearchBar(frame: CGRect.zero)
+        return searchBar
+    }()
+
+    override var searchBar: UISearchBar {
+        return _searchBar
+    }
+
+    func setupSearchController<T: UISearchResultsUpdating>(in viewController: T, with tableView: UITableView, in navigationItem: UINavigationItem, with scopeButtonTitles: [String]?) {
         self.searchResultsUpdater = viewController
-        self.setupSearchBarStyle(with: tableView)
+        self.setupSearchBarStyle(with: tableView, in: navigationItem)
         self.searchBar.scopeButtonTitles = scopeButtonTitles
     }
 
-    private func setupSearchBarStyle(with tableView: UITableView) {
+    private func setupSearchBarStyle(with tableView: UITableView, in navigationItem: UINavigationItem) {
         self.dimsBackgroundDuringPresentation = false
-        tableView.tableHeaderView = self.searchBar
         self.hidesNavigationBarDuringPresentation = false
+
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = self
+        }
+        else {
+            tableView.tableHeaderView = self.searchBar
+        }
     }
 
     func searchBarIsActive() -> Bool {
-        return self.isActive && self.searchBar.isFirstResponder
+        return self.isActive
     }
 
     func filter(content: [User]?, for searchText: String) -> [User]? {
