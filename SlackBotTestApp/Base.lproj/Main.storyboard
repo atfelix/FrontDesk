@@ -102,43 +102,51 @@
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cB6-cp-A2u">
-                                                    <rect key="frame" x="8" y="5" width="59" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cB6-cp-A2u">
+                                                    <rect key="frame" x="8" y="28" width="57" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bQZ-ti-y6w">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bQZ-ti-y6w">
                                                     <rect key="frame" x="711" y="2" width="51" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </switch>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Hgd-K2-B4l">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Hgd-K2-B4l">
                                                     <rect key="frame" x="711" y="43" width="51" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Left At Front Desk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWt-eP-IN0">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Left At Front Desk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWt-eP-IN0">
                                                     <rect key="frame" x="542" y="5" width="161" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Signature Required" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LWe-X2-hBk">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Signature Required" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LWe-X2-hBk">
                                                     <rect key="frame" x="532" y="46" width="171" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXy-4F-HFB">
-                                                    <rect key="frame" x="182" y="6" width="322" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXy-4F-HFB">
+                                                    <rect key="frame" x="180" y="28" width="48" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="EXy-4F-HFB" firstAttribute="centerY" secondItem="cB6-cp-A2u" secondAttribute="centerY" id="3zc-VS-N9d"/>
+                                                <constraint firstItem="cB6-cp-A2u" firstAttribute="leading" secondItem="CuF-nL-ApQ" secondAttribute="leading" constant="8" id="655-1j-cu8"/>
+                                                <constraint firstItem="bQZ-ti-y6w" firstAttribute="top" secondItem="CuF-nL-ApQ" secondAttribute="top" constant="2" id="9tD-Ld-B9a"/>
+                                                <constraint firstItem="EXy-4F-HFB" firstAttribute="leading" secondItem="cB6-cp-A2u" secondAttribute="trailing" constant="115" id="Emm-6d-5qR"/>
+                                                <constraint firstItem="Hgd-K2-B4l" firstAttribute="leading" secondItem="LWe-X2-hBk" secondAttribute="trailing" constant="8" id="Mgt-Q0-RPl"/>
+                                                <constraint firstItem="bQZ-ti-y6w" firstAttribute="leading" secondItem="tWt-eP-IN0" secondAttribute="trailing" constant="8" id="Oci-oP-cUx"/>
+                                                <constraint firstAttribute="trailing" secondItem="Hgd-K2-B4l" secondAttribute="trailing" constant="8" id="TVk-F9-faa"/>
+                                                <constraint firstItem="tWt-eP-IN0" firstAttribute="centerY" secondItem="bQZ-ti-y6w" secondAttribute="centerY" id="WBp-Jc-gdX"/>
+                                                <constraint firstAttribute="trailing" secondItem="bQZ-ti-y6w" secondAttribute="trailing" constant="8" id="aHk-3U-FJK"/>
+                                                <constraint firstItem="cB6-cp-A2u" firstAttribute="centerY" secondItem="CuF-nL-ApQ" secondAttribute="centerY" id="cDB-PM-gSu"/>
+                                                <constraint firstItem="Hgd-K2-B4l" firstAttribute="top" secondItem="bQZ-ti-y6w" secondAttribute="bottom" constant="10" id="cyd-fg-ynQ"/>
+                                                <constraint firstItem="LWe-X2-hBk" firstAttribute="centerY" secondItem="Hgd-K2-B4l" secondAttribute="centerY" id="gKo-Pd-lRw"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="leftAtFrontDeskSwitch" destination="bQZ-ti-y6w" id="63G-XS-Q6u"/>

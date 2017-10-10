@@ -117,16 +117,16 @@ class MeetingViewController: UIViewController, SlackViewController {
                                                                                                              name: name,
                                                                                                              from: company,
                                                                                                              with: email),
-                                                            awayAttachments:Attachment.awayMeetingAttachment(for: cell,
-                                                                                                             channel: channel,
-                                                                                                             name: name,
-                                                                                                             from: company,
-                                                                                                             with: email),
-                                                            dndAttachments:Attachment.dndMeetingAttachment(for: cell,
-                                                                                                           channel: channel,
-                                                                                                           name: name,
-                                                                                                           from: company,
-                                                                                                           with: email))
+                                                            awayAttachments: Attachment.awayMeetingAttachment(for: cell,
+                                                                                                              channel: channel,
+                                                                                                              name: name,
+                                                                                                              from: company,
+                                                                                                              with: email),
+                                                            dndAttachments: Attachment.dndMeetingAttachment(for: cell,
+                                                                                                            channel: channel,
+                                                                                                            name: name,
+                                                                                                            from: company,
+                                                                                                            with: email))
             }
         }
     }
