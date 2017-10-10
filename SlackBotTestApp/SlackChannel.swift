@@ -17,6 +17,7 @@ public enum ParseMode: String {
 }
 
 class SlackChannel {
+    var name: String
     private var channels = [Channel]()
     var sortedChannels: [Channel] {
         get {
@@ -32,7 +33,8 @@ class SlackChannel {
     let webAPI: WebAPI
 
 
-    init(token: String) {
+    init(name: String, token: String) {
+        self.name = name
         self.webAPI = WebAPI(token: token)
     }
 
