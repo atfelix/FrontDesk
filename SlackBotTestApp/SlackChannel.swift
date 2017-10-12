@@ -16,14 +16,11 @@ public enum ParseMode: String {
     case full, none
 }
 
+typealias Team = (name: String, channelName: String, token: String)
+
 class SlackChannel {
     var name: String
-    private var channels = [Channel]()
-    var sortedChannels: [Channel] {
-        get {
-            return self.channels.sorted { $0.defaultName.lowercased() < $1.defaultName.lowercased() }
-        }
-    }
+    var channel: Channel?
     private var users = Set<User>()
     var usersArray: [User] {
         get {
@@ -32,35 +29,28 @@ class SlackChannel {
     }
     let webAPI: WebAPI
 
+    convenience init(team: Team) {
+        self.init(name: team.name, channel: team.channelName, token: team.token)
+    }
 
-    init(name: String, token: String) {
+    private init(name: String, channel: String, token: String) {
         self.name = name
         self.webAPI = WebAPI(token: token)
+        self.getChannelInfo(for: channel)
     }
 
     func update() {
-        self.getChannels()
+        guard let channel = self.channel else { return }
+        self.getUsers(for: channel)
     }
 
-    private func getChannels() {
-        self.webAPI.channelsList(success: { [weak self] (channelArray) in
-            guard let channelArray = channelArray else { return }
-
-            self?.channels.removeAll(keepingCapacity: true)
-
-            for channelDict in channelArray {
-                let channel = Channel(channel: channelDict)
-                guard let id = channel.id else { continue }
-
-                self?.webAPI.channelInfo(id: id,
-                                         success: { (channel) in
-                                            self?.channels.append(channel)
-                                            self?.getUsers(for: channel)
-                }, failure: { (error) in
-                    print(error)
-                })
-            }
-            }, failure: nil)
+    private func getChannelInfo(for channelName: String) {
+        self.webAPI.channelInfo(id: channelName,
+                                success: { (channel) in
+                                    self.channel = channel
+        }) { (slackError) in
+            print(slackError)
+        }
     }
 
     private func getUsers(for channel: Channel) {
@@ -84,14 +74,15 @@ class SlackChannel {
 }
 
 extension SlackChannel {
-    func sendMessageToUserOrChannel(
+    func sendMessage(
         to user: User,
-        channel: String,
         regularAttachments: [Attachment]? = nil,
         awayAttachments: [Attachment]? = nil,
         dndAttachments: [Attachment]? = nil
     ) {
-        guard let userId = user.id else { return }
+        guard
+            let userId = user.id,
+            let channelName = self.channel?.name else { return }
 
         self.dndInfo(user: userId, success: { (status) in
             let timestamp = Date().slackTimestamp
@@ -99,7 +90,7 @@ extension SlackChannel {
                 let dndStart = status.nextDoNotDisturbStart,
                 let dndEnd = status.nextDoNotDisturbEnd,
                 Double(dndStart) <= timestamp && timestamp <= Double(dndEnd) {
-                self.sendMessage(channel: channel,
+                self.sendMessage(channel: channelName,
                                  text: "",
                                  asUser: true,
                                  linkNames: true,
@@ -113,7 +104,7 @@ extension SlackChannel {
                 self.userPresence(user: userId, success: {[weak self]
                     (presence) in
                     if presence == "away" {
-                        self?.sendMessage(channel: channel,
+                        self?.sendMessage(channel: channelName,
                                           text: "",
                                           asUser: true,
                                           linkNames: true,

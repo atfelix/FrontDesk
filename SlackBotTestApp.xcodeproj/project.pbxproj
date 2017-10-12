@@ -190,7 +190,6 @@
 			children = (
 				113F378A1F435940006E4E4D /* API_KEY.swift */,
 				113D8C481F2F8C3E00A03AA7 /* AppDelegate.swift */,
-				11106BE31F8C569800BE2282 /* SlackChannelManager.swift */,
 				11679D5F1F3CD82300E47F90 /* Attachment+Extensions.swift */,
 				112F931E1F685CDD00C8E540 /* Devhub-lighthouselabs-logo (1).png */,
 				113D8C911F2FB09E00A03AA7 /* DecisionViewController.swift */,
@@ -202,6 +201,7 @@
 				117242DE1F4492AE00BF4941 /* SlackSearchController.swift */,
 				11106BE11F8C29AE00BE2282 /* SlackSearchBar.swift */,
 				11EDFAC11F393EDA0040E312 /* SlackChannel.swift */,
+				11106BE31F8C569800BE2282 /* SlackChannelManager.swift */,
 				11EDFABF1F38DDD60040E312 /* User+Extensions.swift */,
 				11ACB9E71F47382B00C16373 /* Channel+Extensions.swift */,
 				11ACB9E91F475AED00C16373 /* UIButton+DecisionButton.swift */,
