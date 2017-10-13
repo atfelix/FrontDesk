@@ -14,7 +14,7 @@ class DecisionViewController: UIViewController {
     @IBOutlet weak var deliveryButton: UIButton!
     @IBOutlet weak var meetingButton: UIButton!
 
-    var slackChannel: SlackChannel!
+    var slackChannelManager: SlackChannelManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class DecisionViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.slackChannel.update()
+        self.slackChannelManager.update()
     }
 
     private func setupButtons() {

@@ -10,9 +10,9 @@ import Foundation
 import SKCore
 import SKWebAPI
 
-public typealias FailureClosure = (_ error: SlackError) -> Void
+typealias FailureClosure = (_ error: SlackError) -> Void
 
-public enum ParseMode: String {
+enum ParseMode: String {
     case full, none
 }
 

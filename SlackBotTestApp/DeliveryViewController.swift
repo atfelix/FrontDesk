@@ -15,13 +15,13 @@ class DeliveryViewController: UIViewController, SlackViewController {
     var notifyButton: UIBarButtonItem!
     let searchController = SlackSearchController(searchResultsController: nil)
 
-    var _slackChannel: SlackChannel?
-    var slackChannel: SlackChannel? {
+    var _slackChannelManager: SlackChannelManager?
+    var slackChannelManager: SlackChannelManager? {
         get {
-            return self._slackChannel
+            return self._slackChannelManager
         }
         set {
-            self._slackChannel = newValue
+            self._slackChannelManager = newValue
         }
     }
 
@@ -41,7 +41,7 @@ class DeliveryViewController: UIViewController, SlackViewController {
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
                                                     in: self.navigationItem,
-                                                    with: self.slackChannel?.sortedChannels.map { $0.defaultName })
+                                                    with: self.slackChannelManager?.channels.map { $0.name })
         self.setupNavigationItem()
         self.definesPresentationContext = true
         self.searchController.searchBar.delegate = self
@@ -64,7 +64,7 @@ class DeliveryViewController: UIViewController, SlackViewController {
                 return
         }
 
-        let channel = scopeButtons[searchBar.selectedScopeButtonIndex];
+        guard let team = self.slackChannelManager?.slackTeam(for: scopeButtons[searchBar.selectedScopeButtonIndex]) else { return }
 
         DispatchQueue.global(qos: .background).async {
             for indexPath in indexPaths {
@@ -74,11 +74,11 @@ class DeliveryViewController: UIViewController, SlackViewController {
                         continue
                 }
 
-                self.slackChannel?.sendMessageToUserOrChannel(to: user,
-                                                            channel: channel,
-                                                            regularAttachments: Attachment.regularDeliveryAttachment(for: cell),
-                                                            awayAttachments:Attachment.awayDeliveryAttachement(for: cell, channel: channel),
-                                                            dndAttachments:Attachment.dndDeliveryAttachement(for: cell, channel: channel))
+                self.slackChannelManager?.sendMessage(to: [user],
+                                                      on: team,
+                                                      regularAttachments: Attachment.regularDeliveryAttachment(for: cell),
+                                                      awayAttachments:Attachment.awayDeliveryAttachement(for: cell, channel: team.channelName),
+                                                      dndAttachments:Attachment.dndDeliveryAttachement(for: cell, channel: team.channelName))
             }
         }
     }
@@ -99,9 +99,20 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
     func filterContentForScope(index: Int) {
 
-        guard let filteredUsers = self.searchController.filter(content: self.slackChannel?.usersArray,
-                                                               in: self.slackChannel,
-                                                               for: index) else {
+        let searchBar = self.searchController.searchBar
+
+        guard
+            let scopeButtons = searchBar.scopeButtonTitles,
+            scopeButtons.startIndex <= index && index < scopeButtons.endIndex else {
+                return
+
+        }
+
+        guard
+            let team = self.slackChannelManager?.slackTeam(for: scopeButtons[index]),
+            let filteredUsers = self.searchController.filter(content: self.slackChannelManager?.users(for: team),
+                                                             in: self.slackChannel,
+                                                             for: index) else {
                                                                 return
         }
 
