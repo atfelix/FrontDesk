@@ -20,6 +20,7 @@ typealias Team = (name: String, channelName: String, token: String)
 
 class SlackChannel {
     var name: String
+    private let channelName: String
     var channel: Channel?
     private var users = Set<User>()
     var usersArray: [User] {
@@ -35,13 +36,12 @@ class SlackChannel {
 
     private init(name: String, channel: String, token: String) {
         self.name = name
+        self.channelName = channel
         self.webAPI = WebAPI(token: token)
-        self.channelDetails(for: channel)
     }
 
     func update() {
-        guard let channel = self.channel else { return }
-        self.getUsers(for: channel)
+        self.channelDetails(for: self.channelName)
     }
 
     private func channelDetails(for channelName: String) {
@@ -65,6 +65,7 @@ class SlackChannel {
         self.webAPI.channelInfo(id: channelId,
                                 success: { (channel) in
                                     self.channel = channel
+                                    self.getUsers(for: channel)
         }) { (error) in
             print(#file, #function, #line, error)
         }

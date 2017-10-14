@@ -255,6 +255,12 @@ class MeetingViewController: UIViewController, SlackViewController {
     }
 }
 
+extension MeetingViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+    }
+}
+
 extension MeetingViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
