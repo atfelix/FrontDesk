@@ -10,7 +10,7 @@ import Foundation
 import SKCore
 
 struct SlackChannelManager {
-    private let teams: [Team]
+    let teams: [Team]
     let channels: [SlackChannel]
 
     init(teams: [Team]) {

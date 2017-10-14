@@ -36,7 +36,7 @@ class SlackChannel {
     private init(name: String, channel: String, token: String) {
         self.name = name
         self.webAPI = WebAPI(token: token)
-        self.getChannelInfo(for: channel)
+        self.channelDetails(for: channel)
     }
 
     func update() {
@@ -44,12 +44,29 @@ class SlackChannel {
         self.getUsers(for: channel)
     }
 
-    private func getChannelInfo(for channelName: String) {
-        self.webAPI.channelInfo(id: channelName,
+    private func channelDetails(for channelName: String) {
+        self.webAPI.channelsList(success: { (channelArray) in
+            guard let channelArray = channelArray else { return }
+
+            channelArray.forEach { channelDict in
+                if
+                    let name = channelDict["name"] as? String,
+                    let id = channelDict["id"] as? String,
+                    name == channelName {
+                        self.channelInfo(for: id)
+                }
+            }
+        }) { (error) in
+            print(#file, #function, #line, error)
+        }
+    }
+
+    private func channelInfo(for channelId: String) {
+        self.webAPI.channelInfo(id: channelId,
                                 success: { (channel) in
                                     self.channel = channel
-        }) { (slackError) in
-            print(slackError)
+        }) { (error) in
+            print(#file, #function, #line, error)
         }
     }
 
@@ -67,7 +84,7 @@ class SlackChannel {
 
                 self?.users.insert(user)
                 }, failure: { (error) in
-                    print(error)
+                    print(#file, #function, #line, error)
             })
         }
     }
@@ -97,7 +114,7 @@ extension SlackChannel {
                                  attachments: dndAttachments,
                                  success: nil,
                                  failure: { (error) in
-                                    print(error)
+                                    print(#file, #function, #line, error)
                 })
             }
             else {
@@ -111,7 +128,7 @@ extension SlackChannel {
                                           attachments: awayAttachments,
                                           success: nil,
                                           failure: { (error) in
-                                            print(error)
+                                            print(#file, #function, #line, error)
                         })
                     }
                     else {
@@ -122,16 +139,16 @@ extension SlackChannel {
                                           attachments: regularAttachments,
                                           success: nil,
                                           failure: { error in
-                                            print(error)
+                                            print(#file, #function, #line, error)
                         })
 
                     }
                     }, failure: { (error) in
-                        print(error)
+                        print(#file, #function, #line, error)
                 })
             }
         }, failure: { (error) in
-            print(error)
+            print(#file, #function, #line, error)
         })
     }
 

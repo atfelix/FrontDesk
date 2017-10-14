@@ -110,13 +110,11 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
         guard
             let team = self.slackChannelManager?.slackTeam(for: scopeButtons[index]),
-            let filteredUsers = self.searchController.filter(content: self.slackChannelManager?.users(for: team),
-                                                             in: self.slackChannel,
-                                                             for: index) else {
+            let users = self.slackChannelManager?.users(for: team) else {
                                                                 return
         }
 
-        self.filteredUsers = filteredUsers
+        self.filteredUsers = users
     }
 
     func reloadData(criterion: Bool = true) {

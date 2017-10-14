@@ -21,7 +21,7 @@ extension String {
             result = numMatches == 1
         }
         catch {
-            print(error)
+            print(#file, #function, #line, error)
         }
         return result
     }

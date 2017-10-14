@@ -68,34 +68,34 @@ extension Attachment {
                                                       with: email))]
     }
 
-    static func awayMeetingAttachment(for meetingCell: MeetingTableViewCell, channel: String, name: String, from company: String, with email: String) -> [Attachment]? {
+    static func awayMeetingAttachment(for meetingCell: MeetingTableViewCell, team: Team, name: String, from company: String, with email: String) -> [Attachment]? {
         guard
             let user = meetingCell.user,
             let userName = user.name else {
                 return nil
         }
 
-        return [Attachment(fallback: self.awayMeetingFallback(userName: userName, channel: channel),
+        return [Attachment(fallback: self.awayMeetingFallback(userName: userName, channel: team.channelName),
                            title: nil,
                            colorHex: self.colorHex(),
-                           pretext: self.awayMeetingPretext(userName: userName, channel: channel),
+                           pretext: self.awayMeetingPretext(userName: userName, channel: team.channelName),
                            fields: self.channelMeetingFields(for: meetingCell,
                                                              name: name,
                                                              from: company,
                                                              with: email))]
     }
 
-    static func dndMeetingAttachment(for meetingCell: MeetingTableViewCell, channel: String, name: String, from company: String, with email: String) -> [Attachment]? {
+    static func dndMeetingAttachment(for meetingCell: MeetingTableViewCell, team: Team, name: String, from company: String, with email: String) -> [Attachment]? {
         guard
             let user = meetingCell.user,
             let userName = user.name else {
                 return nil
         }
 
-        return [Attachment(fallback: self.dndMeetingFallback(userName: userName, channel: channel),
+        return [Attachment(fallback: self.dndMeetingFallback(userName: userName, channel: team.channelName),
                            title: nil,
                            colorHex: self.colorHex(),
-                           pretext: self.dndMeetingPretext(userName: userName, channel: channel),
+                           pretext: self.dndMeetingPretext(userName: userName, channel: team.channelName),
                            fields: self.channelMeetingFields(for: meetingCell,
                                                              name: name,
                                                              from: company,

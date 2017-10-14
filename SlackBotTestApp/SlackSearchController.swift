@@ -16,7 +16,7 @@ protocol SlackTableViewCell {
 }
 
 protocol SlackViewController {
-    var slackChannel: SlackChannel? { get set }
+    var slackChannelManager: SlackChannelManager? { get set }
     var filteredUsers: [User]? { get set }
 }
 
@@ -62,19 +62,6 @@ class SlackSearchController: UISearchController {
 
         return content.filter { user in
             return searchText.isEmpty || (user.profile?.realName?.lowercased().range(of: searchText.lowercased()) != nil)
-        }
-    }
-
-    func filter(content: [User]?, in slackChannel: SlackChannel?, for scopeIndex: Int) -> [User]? {
-        guard
-            let members = slackChannel?.sortedChannels[scopeIndex].members,
-            let content = content else {
-                return nil
-        }
-
-        return content.filter { user in
-            guard let id = user.id else { return false }
-            return members.contains(id)
         }
     }
 }

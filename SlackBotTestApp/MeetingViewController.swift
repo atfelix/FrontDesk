@@ -19,13 +19,13 @@ class MeetingViewController: UIViewController, SlackViewController {
     var notifyButton: UIBarButtonItem!
     let searchController = SlackSearchController(searchResultsController: nil)
 
-    var _slackChannel: SlackChannel?
-    var slackChannel: SlackChannel? {
+    var _slackChannelManager: SlackChannelManager?
+    var slackChannelManager: SlackChannelManager? {
         get {
-            return self._slackChannel
+            return self._slackChannelManager
         }
         set {
-            self._slackChannel = newValue
+            self._slackChannelManager = newValue
         }
     }
 
@@ -72,7 +72,7 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.searchController.setupSearchController(in: self,
                                                     with: self.tableView,
                                                     in: self.navigationItem,
-                                                    with: self.slackChannel?.sortedChannels.map { $0.defaultName })
+                                                    with: self.slackChannelManager?.teams.map { $0.name })
 
         self.setupNavigationItem()
         self.definesPresentationContext = true
@@ -97,11 +97,10 @@ class MeetingViewController: UIViewController, SlackViewController {
             let name = self.nameLabel.text,
             let company = self.companyLabel.text,
             let email = self.emailLabel.text,
-            !name.isEmpty && !email.isEmpty && String.isValid(email: email) else {
+            !name.isEmpty && !email.isEmpty && String.isValid(email: email),
+            let team = self.slackChannelManager?.slackTeam(for: scopeButtons[searchBar.selectedScopeButtonIndex]) else {
                 return
         }
-
-        let channel = scopeButtons[searchBar.selectedScopeButtonIndex]
 
         DispatchQueue.global(qos: .background).async {
             for indexPath in indexPaths {
@@ -111,22 +110,22 @@ class MeetingViewController: UIViewController, SlackViewController {
                         continue
                 }
 
-                self.slackChannel?.sendMessageToUserOrChannel(to: user,
-                                                            channel: channel,
-                                                            regularAttachments: Attachment.meetingAttachment(for: cell,
-                                                                                                             name: name,
-                                                                                                             from: company,
-                                                                                                             with: email),
-                                                            awayAttachments: Attachment.awayMeetingAttachment(for: cell,
-                                                                                                              channel: channel,
-                                                                                                              name: name,
-                                                                                                              from: company,
-                                                                                                              with: email),
-                                                            dndAttachments: Attachment.dndMeetingAttachment(for: cell,
-                                                                                                            channel: channel,
-                                                                                                            name: name,
-                                                                                                            from: company,
-                                                                                                            with: email))
+                self.slackChannelManager?.sendMessage(to: [user],
+                                                      on: team,
+                                                      regularAttachments: Attachment.meetingAttachment(for: cell,
+                                                                                                       name: name,
+                                                                                                       from: company,
+                                                                                                       with: email),
+                                                      awayAttachments: Attachment.awayMeetingAttachment(for: cell,
+                                                                                                        team: team,
+                                                                                                        name: name,
+                                                                                                        from: company,
+                                                                                                        with: email),
+                                                      dndAttachments: Attachment.dndMeetingAttachment(for: cell,
+                                                                                                      team: team,
+                                                                                                      name: name,
+                                                                                                      from: company,
+                                                                                                      with: email))
             }
         }
     }
@@ -137,12 +136,23 @@ class MeetingViewController: UIViewController, SlackViewController {
     }
 
     func filterContentForScope(index: Int) {
-        guard let filteredUsers = self.searchController.filter(content: self.slackChannel?.usersArray,
-                                                               in: self.slackChannel,
-                                                               for: index) else {
-                                                                return
+
+        let searchBar = self.searchController.searchBar
+
+        guard
+            let scopeButtons = searchBar.scopeButtonTitles,
+            scopeButtons.startIndex <= index && index < scopeButtons.endIndex else {
+                return
+
         }
-        self.filteredUsers = filteredUsers
+
+        guard
+            let team = self.slackChannelManager?.slackTeam(for: scopeButtons[index]),
+            let users = self.slackChannelManager?.users(for: team) else {
+                return
+        }
+
+        self.filteredUsers = users
     }
 
     func reloadData(criterion: Bool = true) {
