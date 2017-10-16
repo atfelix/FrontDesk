@@ -22,10 +22,12 @@ class SlackChannel {
     var name: String
     private let channelName: String
     var channel: Channel?
-    private var users = Set<User>()
-    var usersArray: [User] {
-        get {
-            return self.users.sorted { $0.defaultRealName.lowercased() < $1.defaultRealName.lowercased() }
+    var users = Set<User>()
+    private var numberOfDownloads = 1 {
+        didSet {
+            if self.numberOfDownloads == 0 {
+                NotificationCenter.default.post(name: Notification.Name("SlackChannelDidFinishDownload"), object: nil)
+            }
         }
     }
     let webAPI: WebAPI
@@ -41,6 +43,7 @@ class SlackChannel {
     }
 
     func update() {
+        self.numberOfDownloads = 1
         self.channelDetails(for: self.channelName)
     }
 
@@ -65,6 +68,8 @@ class SlackChannel {
         self.webAPI.channelInfo(id: channelId,
                                 success: { (channel) in
                                     self.channel = channel
+                                    self.numberOfDownloads += self.channel?.members?.count ?? 0
+                                    self.numberOfDownloads -= 1
                                     self.getUsers(for: channel)
         }) { (error) in
             print(#file, #function, #line, error)
@@ -76,6 +81,7 @@ class SlackChannel {
 
         for userIdString in members {
             self.webAPI.userInfo(id: userIdString, success: { [weak self] (user) in
+                self?.numberOfDownloads -= 1
                 guard
                     let isBot = user.isBot,
                     let hasUser = self?.users.contains(user),

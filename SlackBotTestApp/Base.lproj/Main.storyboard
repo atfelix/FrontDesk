@@ -10,6 +10,40 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Activity Indicator View Controller-->
+        <scene sceneID="2wd-2M-hNp">
+            <objects>
+                <viewController storyboardIdentifier="ActivityIndicatorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rh8-bo-wv8" customClass="ActivityIndicatorViewController" customModule="SlackBotTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qE9-MG-5ra"/>
+                        <viewControllerLayoutGuide type="bottom" id="L4O-RC-gbT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1So-VR-SKG">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="GaA-MZ-u01">
+                                <rect key="frame" x="340" y="468" width="88" height="88"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="88" id="HWD-iw-Y1O"/>
+                                    <constraint firstAttribute="height" constant="88" id="v6E-Uf-Yu7"/>
+                                </constraints>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="GaA-MZ-u01" firstAttribute="centerY" secondItem="1So-VR-SKG" secondAttribute="centerY" id="4e0-0x-pSP"/>
+                            <constraint firstItem="GaA-MZ-u01" firstAttribute="centerX" secondItem="1So-VR-SKG" secondAttribute="centerX" id="xmb-Ie-2vg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="GaA-MZ-u01" id="7Gj-0v-uHq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zuJ-oo-Ug8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-91" y="-76"/>
+        </scene>
         <!--Welcome to Lighthouse Labs && Dev Hub-->
         <scene sceneID="tne-QT-ifu">
             <objects>

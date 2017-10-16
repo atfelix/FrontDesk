@@ -10,19 +10,15 @@ import Foundation
 
 extension String {
     static func isValid(email: String) -> Bool {
-        var result = false
-        do {
-            let regex = try NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]",
-                                                options: .caseInsensitive)
-            let numMatches = regex.numberOfMatches(in: email,
-                                                   options: NSRegularExpression.MatchingOptions(rawValue: 0),
-                                                   range: NSRange(location: 0,
-                                                                  length: email.characters.count))
-            result = numMatches == 1
+        guard let regex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]",
+                                                   options: .caseInsensitive) else {
+            return false
         }
-        catch {
-            print(#file, #function, #line, error)
-        }
-        return result
+
+        let numMatches = regex.numberOfMatches(in: email,
+                                               options: NSRegularExpression.MatchingOptions(rawValue: 0),
+                                               range: NSRange(location: 0,
+                                                              length: email.characters.count))
+        return numMatches == 1
     }
 }

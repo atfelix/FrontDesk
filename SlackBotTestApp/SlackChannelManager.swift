@@ -9,16 +9,40 @@
 import Foundation
 import SKCore
 
-struct SlackChannelManager {
+class SlackChannelManager {
     let teams: [Team]
     let channels: [SlackChannel]
+    private var numberOfDownloads = 0 {
+        didSet {
+            if self.numberOfDownloads == 0 {
+                NotificationCenter.default.post(name: NSNotification.Name("SlackChannelManagerDownloadDidFinish"), object: nil)
+            }
+        }
+    }
+
+    deinit {
+        self.deregisterNotifications()
+    }
+
+    private func deregisterNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    private func registerNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(SlackChannelManager.downloadCompleted),
+                                               name: NSNotification.Name("SlackChannelDidFinishDownload"),
+                                               object: nil)
+    }
 
     init(teams: [Team]) {
         self.teams = teams
         self.channels = teams.map { SlackChannel(team: $0) }
+        self.registerNotifications()
     }
 
     func update() {
+        self.numberOfDownloads = self.teams.count
         self.channels.forEach { $0.update() }
     }
 
@@ -41,7 +65,11 @@ struct SlackChannelManager {
     func users(for team: Team) -> [User]? {
         guard let channel = self.slackChannel(for: team) else { return nil }
 
-        return channel.usersArray
+        return channel.users.sorted { $0.0.defaultRealName < $0.1.defaultRealName }
+    }
+
+    @objc func downloadCompleted() {
+        self.numberOfDownloads -= 1
     }
 }
 

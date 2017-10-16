@@ -16,14 +16,32 @@ class DecisionViewController: UIViewController {
 
     var slackChannelManager: SlackChannelManager!
 
+    deinit {
+        self.deregisterNotifications()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupButtons()
+        self.registerNotifications()
+        self.loadActivityController()
+        self.slackChannelManager.update()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.slackChannelManager.update()
+    private func deregisterNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    private func registerNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(DecisionViewController.downloadCompleted),
+                                               name: NSNotification.Name("SlackChannelManagerDownloadDidFinish"),
+                                               object: nil)
+    }
+
+    private func loadActivityController() {
+        let activityIndicatorVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ActivityIndicatorViewController") as! ActivityIndicatorViewController
+        self.navigationController?.present(activityIndicatorVC, animated: false)
     }
 
     private func setupButtons() {
@@ -52,5 +70,15 @@ class DecisionViewController: UIViewController {
                                                                 style: .done,
                                                                 target: nil,
                                                                 action: nil)
+    }
+
+    func downloadCompleted() {
+        guard let vc = self.navigationController?.presentedViewController as? ActivityIndicatorViewController else { return }
+        vc.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension DecisionViewController: ActivityIndicatorDelegate {
+    func doneDownload() {
     }
 }

@@ -35,6 +35,10 @@ class DeliveryViewController: UIViewController, SlackViewController {
         }
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,6 +48,7 @@ class DeliveryViewController: UIViewController, SlackViewController {
                                                     with: self.slackChannelManager?.channels.map { $0.name })
         self.setupNavigationItem()
         self.definesPresentationContext = true
+        self.tableView.keyboardDismissMode = .interactive
         self.searchController.searchBar.delegate = self
         self.searchController.delegate = self
         self.filterContentForScope(index: 0)
@@ -144,21 +149,18 @@ class DeliveryViewController: UIViewController, SlackViewController {
     }
 
     func keyboardWillShow(_ notification: Notification) {
-        guard let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let keyboardRect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
-        self.tableView.frame = CGRect(x: self.tableView.frame.origin.x,
-                                      y: self.tableView.frame.origin.y,
-                                      width: self.tableView.frame.width,
-                                      height: self.tableView.frame.height - rect.height)
+        let keyboardSize = keyboardRect.size
+        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+
+        self.tableView.contentInset = contentInsets
+        self.tableView.scrollIndicatorInsets = contentInsets
     }
 
     func keyboardWillHide(_ notification: Notification) {
-        guard let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-
-        self.tableView.frame = CGRect(x: self.tableView.frame.origin.x,
-                                      y: self.tableView.frame.origin.y,
-                                      width: self.tableView.frame.width,
-                                      height: self.tableView.frame.height + rect.height)
+        self.tableView.contentInset = UIEdgeInsets.zero
+        self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
 }
 

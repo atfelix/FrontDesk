@@ -66,6 +66,10 @@ class MeetingViewController: UIViewController, SlackViewController {
         return toolbar
     }()
 
+    deinit {
+        self.deregisterNotifications()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,6 +80,7 @@ class MeetingViewController: UIViewController, SlackViewController {
 
         self.setupNavigationItem()
         self.definesPresentationContext = true
+        self.tableView.keyboardDismissMode = .interactive
         self.filterContentForScope(index: 0)
         self.setupDelegates()
         self.setupTags()
@@ -203,10 +208,8 @@ class MeetingViewController: UIViewController, SlackViewController {
             return
         }
 
-        for subview in self.view.subviews {
-            if subview.tag == self.currentFocusIndex {
-                subview.becomeFirstResponder()
-            }
+        for subview in self.view.subviews where subview.tag == self.currentFocusIndex {
+            subview.becomeFirstResponder()
         }
     }
 
@@ -225,7 +228,11 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.filterContentForSearchText(searchText: searchText)
     }
 
-    func registerKeyboardNotifications() {
+    private func deregisterNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    private func registerKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MeetingViewController.keyboardWillShow),
                                                name: .UIKeyboardWillShow,
@@ -237,29 +244,21 @@ class MeetingViewController: UIViewController, SlackViewController {
     }
 
     func keyboardWillShow(_ notification: Notification) {
-        guard let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let keyboardRect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
-        self.tableView.frame = CGRect(x: self.tableView.frame.origin.x,
-                                      y: self.tableView.frame.origin.y,
-                                      width: self.tableView.frame.width,
-                                      height: self.tableView.frame.height - rect.height)
+        let keyboardSize = keyboardRect.size
+        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+
+        self.tableView.contentInset = contentInsets
+        self.tableView.scrollIndicatorInsets = contentInsets
     }
 
     func keyboardWillHide(_ notification: Notification) {
-        guard let rect = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-
-        self.tableView.frame = CGRect(x: self.tableView.frame.origin.x,
-                                      y: self.tableView.frame.origin.y,
-                                      width: self.tableView.frame.width,
-                                      height: self.tableView.frame.height + rect.height)
+        self.tableView.contentInset = UIEdgeInsets.zero
+        self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
 }
 
-extension MeetingViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
-    }
-}
 
 extension MeetingViewController: UITableViewDataSource {
 
