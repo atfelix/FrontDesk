@@ -71,19 +71,34 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
         guard let team = self.slackChannelManager?.slackTeam(for: scopeButtons[searchBar.selectedScopeButtonIndex]) else { return }
 
-        DispatchQueue.global(qos: .background).async {
-            for indexPath in indexPaths {
-                guard
-                    let cell = self.tableView.cellForRow(at: indexPath) as? DeliveryTableViewCell,
-                    let user = cell.user else {
-                        continue
-                }
+        var indexPathData = [(User, Bool, Bool)]()
 
+        for indexPath in indexPaths {
+            guard
+                let cell = self.tableView.cellForRow(at: indexPath) as? DeliveryTableViewCell,
+                let user = cell.user
+            else { continue }
+
+            let leftAtFrontDesk = cell.leftAtFrontDeskSwitch.isOn
+            let signatureRequired = cell.signatureRequiredSwitch.isOn
+
+            indexPathData.append((user, leftAtFrontDesk, signatureRequired))
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            for (user, leftAtFrontDesk, signatureRequired) in indexPathData {
                 self.slackChannelManager?.sendMessage(to: [user],
                                                       on: team,
-                                                      regularAttachments: Attachment.regularDeliveryAttachment(for: cell),
-                                                      awayAttachments:Attachment.awayDeliveryAttachement(for: cell, channel: team.channelName),
-                                                      dndAttachments:Attachment.dndDeliveryAttachement(for: cell, channel: team.channelName))
+                                                      regularAttachments: Attachment.regularDeliveryAttachment(for: user,
+                                                                                                               leftAtFrontDesk: leftAtFrontDesk,
+                                                                                                               signatureRequired: signatureRequired),
+                                                      awayAttachments:Attachment.awayDeliveryAttachement(for: user,
+
+                                                                                                         leftAtFrontDesk: leftAtFrontDesk,
+                                                                                                         signatureRequired: signatureRequired,                                                      channel: team.channelName),
+                                                      dndAttachments:Attachment.dndDeliveryAttachement(for: user, leftAtFrontDesk: leftAtFrontDesk,
+                                                                                                       signatureRequired: signatureRequired,
+                                                                                                       channel: team.channelName))
             }
         }
     }

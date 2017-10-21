@@ -107,26 +107,31 @@ class MeetingViewController: UIViewController, SlackViewController {
                 return
         }
 
-        DispatchQueue.global(qos: .background).async {
-            for indexPath in indexPaths {
-                guard
-                    let cell = self.tableView.cellForRow(at: indexPath) as? MeetingTableViewCell,
-                    let user = cell.user else {
-                        continue
-                }
+        var indexPathData = [User]()
 
+        for indexPath in indexPaths {
+            guard
+                let cell = self.tableView.cellForRow(at: indexPath) as? MeetingTableViewCell,
+                let user = cell.user
+            else { continue }
+
+            indexPathData.append(user)
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            for user in indexPathData {
                 self.slackChannelManager?.sendMessage(to: [user],
                                                       on: team,
-                                                      regularAttachments: Attachment.meetingAttachment(for: cell,
+                                                      regularAttachments: Attachment.meetingAttachment(for: user,
                                                                                                        name: name,
                                                                                                        from: company,
                                                                                                        with: email),
-                                                      awayAttachments: Attachment.awayMeetingAttachment(for: cell,
+                                                      awayAttachments: Attachment.awayMeetingAttachment(for: user,
                                                                                                         team: team,
                                                                                                         name: name,
                                                                                                         from: company,
                                                                                                         with: email),
-                                                      dndAttachments: Attachment.dndMeetingAttachment(for: cell,
+                                                      dndAttachments: Attachment.dndMeetingAttachment(for: user,
                                                                                                       team: team,
                                                                                                       name: name,
                                                                                                       from: company,
