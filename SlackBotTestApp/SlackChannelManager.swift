@@ -65,7 +65,7 @@ class SlackChannelManager {
     func users(for team: Team) -> [User]? {
         guard let channel = self.slackChannel(for: team) else { return nil }
 
-        return channel.users.sorted { $0.0.defaultRealName < $0.1.defaultRealName }
+        return channel.users.sorted { $0.0.defaultRealName.lowercased() < $0.1.defaultRealName.lowercased() }
     }
 
     @objc func downloadCompleted() {

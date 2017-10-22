@@ -24,19 +24,13 @@ extension User : Equatable, Hashable {
 extension User {
     var defaultName: String {
         get {
-            return self.name ?? "NO NAME"
+            return self.name ?? "{NO NAME}"
         }
     }
 
     var defaultRealName: String {
         get {
-            return self.profile?.realName ?? "NO REAL NAME"
-        }
-    }
-
-    var defaultPresence: String {
-        get {
-            return self.presence ?? self.profile?.customProfile?.fields["presence"]?.value ?? "no presence"
+            return self.profile?.realName ?? "{NO REAL NAME}"
         }
     }
 }
