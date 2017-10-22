@@ -94,6 +94,11 @@ class MeetingViewController: UIViewController, SlackViewController {
 
     func notifyButtonTapped(_ sender: UIButton) {
 
+        guard self.formIsValid() else {
+            self.alertMeetingGoer()
+            return
+        }
+
         let searchBar = self.searchController.searchBar
 
         guard
@@ -171,15 +176,15 @@ class MeetingViewController: UIViewController, SlackViewController {
         }
     }
 
-    func updateNotifyButton() {
+    func formIsValid() -> Bool {
         guard
             let name = self.nameLabel.text,
             let email = self.emailLabel.text else {
                 self.notifyButton.isEnabled = false
-                return
+                return false
         }
 
-        self.notifyButton.isEnabled = (self.tableView.indexPathsForSelectedRows != nil
+        return (self.tableView.indexPathsForSelectedRows != nil
             && !name.isEmpty && !email.isEmpty && String.isValid(email: email))
     }
 
@@ -189,7 +194,6 @@ class MeetingViewController: UIViewController, SlackViewController {
                                             target: self,
                                             action: #selector(MeetingViewController.notifyButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = self.notifyButton
-        self.notifyButton.isEnabled = false
         self.automaticallyAdjustsScrollViewInsets = false
     }
 
@@ -262,6 +266,14 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.tableView.contentInset = UIEdgeInsets.zero
         self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
+
+    private func alertMeetingGoer() {
+        let alert = UIAlertController(title: "Invalid Selection",
+                                      message: "Please fill in the \"Name\" field, give a valid email, and select with whom (may be more than one) you're meeting.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 
@@ -276,16 +288,6 @@ extension MeetingViewController: UITableViewDataSource {
         cell.user = self.filteredUsers?[indexPath.row]
         cell.displayCell()
         return cell
-    }
-}
-
-extension MeetingViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.updateNotifyButton()
-    }
-
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        self.updateNotifyButton()
     }
 }
 
@@ -316,7 +318,6 @@ extension MeetingViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.updateNotifyButton()
         if searchBar.text != "" {
             self.filterContentForSearchText(searchText: searchBar.text ?? "")
             self.reloadData()
@@ -327,7 +328,6 @@ extension MeetingViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         self.filterContent(index: selectedScope, searchText: text)
         self.reloadData()
-        self.updateNotifyButton()
     }
 }
 
@@ -345,7 +345,6 @@ extension MeetingViewController: UITextFieldDelegate {
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        self.updateNotifyButton()
         return true
     }
 }

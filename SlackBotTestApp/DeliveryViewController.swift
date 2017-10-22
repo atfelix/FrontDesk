@@ -61,6 +61,11 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
     func notifyButtonTapped(_ sender: UIButton) {
 
+        guard self.tableView.indexPathsForSelectedRows != nil else {
+            self.alertLetterCarrier()
+            return
+        }
+
         let searchBar = self.searchController.searchBar
 
         guard
@@ -108,7 +113,6 @@ class DeliveryViewController: UIViewController, SlackViewController {
         self.notifyButton = UIBarButtonItem(barButtonSystemItem: .action,
                                             target: self,
                                             action: #selector(MeetingViewController.notifyButtonTapped(_:)))
-        self.notifyButton.isEnabled = false
         self.navigationItem.rightBarButtonItem = self.notifyButton
     }
 
@@ -148,10 +152,6 @@ class DeliveryViewController: UIViewController, SlackViewController {
         self.filterContentForSearchText(searchText: searchText)
     }
 
-    func updateNotifyButton() {
-        self.notifyButton.isEnabled = self.tableView.indexPathsForSelectedRows != nil
-    }
-
     func registerKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MeetingViewController.keyboardWillShow),
@@ -177,6 +177,14 @@ class DeliveryViewController: UIViewController, SlackViewController {
         self.tableView.contentInset = UIEdgeInsets.zero
         self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
+
+    private func alertLetterCarrier() {
+        let alert = UIAlertController(title: "Invalid Selection",
+                                      message: "Please choose at least one person",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 extension DeliveryViewController: UITableViewDataSource {
@@ -190,16 +198,6 @@ extension DeliveryViewController: UITableViewDataSource {
         cell.user = self.filteredUsers?[indexPath.row]
         cell.displayCell()
         return cell as! UITableViewCell
-    }
-}
-
-extension DeliveryViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.updateNotifyButton()
-    }
-
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        self.updateNotifyButton()
     }
 }
 
@@ -219,12 +217,10 @@ extension DeliveryViewController: UISearchBarDelegate {
                                searchText: String(searchText.characters.dropLast()))
             self.reloadData()
         }
-        self.updateNotifyButton()
         return true
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.updateNotifyButton()
         if searchBar.text != "" {
             self.filterContentForSearchText(searchText: searchBar.text ?? "")
             self.reloadData()
@@ -232,7 +228,6 @@ extension DeliveryViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        self.updateNotifyButton()
         guard let text = searchBar.text else { return }
         self.filterContent(index: selectedScope, searchText: text)
         self.reloadData()
