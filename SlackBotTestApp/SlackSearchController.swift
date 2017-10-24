@@ -15,9 +15,37 @@ protocol SlackTableViewCell {
     func displayCell()
 }
 
-protocol SlackViewController {
+protocol SlackViewController: class {
     var slackChannelManager: SlackChannelManager? { get set }
     var filteredUsers: [User]? { get set }
+    var searchController: SlackSearchController { get set }
+
+    func filterContentForSearchText(searchText: String)
+    func filterContentForScope(index: Int)
+    func filterContent(index: Int, searchText: String)
+}
+
+extension SlackViewController {
+    func filterContentForSearchText(searchText: String) {
+        guard let filteredUsers = self.searchController.filter(content: self.filteredUsers, for: searchText) else { return }
+        self.filteredUsers = filteredUsers
+    }
+
+    func filterContentForScope(index: Int) {
+        guard
+            let scopeButtons = self.searchController.searchBar.scopeButtonTitles,
+            scopeButtons.startIndex <= index && index < scopeButtons.endIndex,
+            let team = self.slackChannelManager?.slackTeam(for: scopeButtons[index]),
+            let users = self.slackChannelManager?.users(for: team)
+        else { return }
+
+        self.filteredUsers = users
+    }
+
+    func filterContent(index: Int, searchText: String) {
+        self.filterContentForScope(index: index)
+        self.filterContentForSearchText(searchText: searchText)
+    }
 }
 
 class SlackSearchController: UISearchController {

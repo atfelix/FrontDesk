@@ -17,27 +17,10 @@ class MeetingViewController: UIViewController, SlackViewController {
     @IBOutlet weak var emailLabel: UITextField!
 
     var notifyButton: UIBarButtonItem!
-    let searchController = SlackSearchController(searchResultsController: nil)
+    var searchController = SlackSearchController(searchResultsController: nil)
 
-    var _slackChannelManager: SlackChannelManager?
-    var slackChannelManager: SlackChannelManager? {
-        get {
-            return self._slackChannelManager
-        }
-        set {
-            self._slackChannelManager = newValue
-        }
-    }
-
-    var _filteredUsers: [User]?
-    var filteredUsers: [User]? {
-        get {
-            return self._filteredUsers
-        }
-        set {
-            self._filteredUsers = newValue
-        }
-    }
+    var slackChannelManager: SlackChannelManager? = nil
+    var filteredUsers: [User]? = nil
     var currentFocusIndex = 1 {
         didSet {
             self.currentFocusIndex = ((self.currentFocusIndex + 4) % 4)
@@ -145,31 +128,6 @@ class MeetingViewController: UIViewController, SlackViewController {
         }
     }
 
-    func filterContentForSearchText(searchText: String) {
-        guard let filteredUsers = self.searchController.filter(content: self.filteredUsers, for: searchText) else { return }
-        self.filteredUsers = filteredUsers
-    }
-
-    func filterContentForScope(index: Int) {
-
-        let searchBar = self.searchController.searchBar
-
-        guard
-            let scopeButtons = searchBar.scopeButtonTitles,
-            scopeButtons.startIndex <= index && index < scopeButtons.endIndex else {
-                return
-
-        }
-
-        guard
-            let team = self.slackChannelManager?.slackTeam(for: scopeButtons[index]),
-            let users = self.slackChannelManager?.users(for: team) else {
-                return
-        }
-
-        self.filteredUsers = users
-    }
-
     func reloadData(criterion: Bool = true) {
         if criterion {
             self.tableView.reloadData()
@@ -230,11 +188,6 @@ class MeetingViewController: UIViewController, SlackViewController {
     func nextButtonTapped(_ sender: UIBarButtonItem) {
         self.currentFocusIndex += 1
         self.determineFirstResponder()
-    }
-
-    func filterContent(index: Int, searchText: String) {
-        self.filterContentForScope(index: index)
-        self.filterContentForSearchText(searchText: searchText)
     }
 
     private func deregisterNotifications() {
