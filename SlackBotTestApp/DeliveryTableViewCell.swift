@@ -15,15 +15,7 @@ class DeliveryTableViewCell: UITableViewCell, SlackTableViewCell {
     @IBOutlet weak var signatureRequiredSwitch: UISwitch!
     @IBOutlet weak var nameLabel: UILabel!
 
-    var _user: User?
-    var user: User? {
-        get {
-            return self._user
-        }
-        set {
-            self._user = newValue
-        }
-    }
+    var user: User? = nil
     
     func displayCell() {
         self.nameLabel.text = self.user?.profile?.realName

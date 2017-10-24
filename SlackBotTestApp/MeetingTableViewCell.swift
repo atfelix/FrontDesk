@@ -11,15 +11,7 @@ import SKCore
 
 class MeetingTableViewCell: UITableViewCell, SlackTableViewCell {
 
-    var _user: User?
-    var user: User? {
-        get {
-            return self._user
-        }
-        set {
-            self._user = newValue
-        }
-    }
+    var user: User? = nil
 
     func displayCell() {
         self.textLabel?.text = self.user?.profile?.realName
