@@ -89,7 +89,9 @@ class SlackChannel {
                         return
                 }
 
-                self?.users.insert(user)
+                if (!(user.deleted ?? false)) {
+                    self?.users.insert(user)
+                }
                 }, failure: { (error) in
                     print(#file, #function, #line, error)
             })
