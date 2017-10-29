@@ -9,7 +9,7 @@
 import UIKit
 import SKCore
 
-class MeetingTableViewCell: UITableViewCell, SlackTableViewCell {
+class MeetingTableViewCell: UITableViewCell, SlackCell {
 
     var user: User? = nil
 

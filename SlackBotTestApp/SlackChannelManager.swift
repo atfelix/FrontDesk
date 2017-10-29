@@ -68,6 +68,13 @@ class SlackChannelManager {
         return channel.users.sorted { $0.0.defaultRealName.lowercased() < $0.1.defaultRealName.lowercased() }
     }
 
+    func filtered(content: [User]?, for searchText: String) -> [User]? {
+        guard let content = content else { return nil }
+        return content.filter { user in
+            return searchText.isEmpty || (user.defaultRealName.lowercased().range(of: searchText.lowercased()) !=  nil)
+        }
+    }
+
     @objc func downloadCompleted() {
         self.numberOfDownloads -= 1
     }

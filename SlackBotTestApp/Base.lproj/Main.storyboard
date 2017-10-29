@@ -223,24 +223,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EHk-cL-9Ug">
-                                <rect key="frame" x="0.0" y="186" width="768" height="838"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MeetingCell" id="J26-v4-elw" customClass="MeetingTableViewCell" customModule="SlackBotTestApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="768" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J26-v4-elw" id="AZe-JA-fBy">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="K23-JL-swe" id="D80-8b-mOg"/>
-                                    <outlet property="delegate" destination="K23-JL-swe" id="PvD-xQ-2Qs"/>
-                                </connections>
-                            </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8O-C1-pKu">
                                 <rect key="frame" x="20" y="115" width="78" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -280,43 +262,102 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="b0W-k6-C4G">
+                                <rect key="frame" x="8" y="250" width="752" height="766"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="v7H-Kq-izf">
+                                    <size key="itemSize" width="140" height="140"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MeetingCell" id="mhW-px-hfO" customClass="MeetingCollectionViewCell" customModule="SlackBotTestApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDf-AK-ta2">
+                                                    <rect key="frame" x="49" y="59.5" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="HOd-As-Mvt"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="TEr-UQ-CFR"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="HDf-AK-ta2" firstAttribute="centerY" secondItem="mhW-px-hfO" secondAttribute="centerY" id="HjR-h6-hwg"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HDf-AK-ta2" secondAttribute="trailing" constant="5" id="Oov-Lt-W7C"/>
+                                            <constraint firstItem="HDf-AK-ta2" firstAttribute="centerX" secondItem="mhW-px-hfO" secondAttribute="centerX" id="hr9-vQ-YIt"/>
+                                            <constraint firstItem="HDf-AK-ta2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mhW-px-hfO" secondAttribute="leading" constant="5" id="j8G-YR-e9z"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="HDf-AK-ta2" id="0Y0-v8-OmH"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="K23-JL-swe" id="5Gx-GT-g0a"/>
+                                    <outlet property="delegate" destination="K23-JL-swe" id="E3i-yy-awK"/>
+                                </connections>
+                            </collectionView>
+                            <searchBar opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GMi-Ho-h6K" customClass="SlackSearchBar" customModule="SlackBotTestApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="186" width="768" height="56"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="56" id="RiV-JI-lCj"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" textContentType="name"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="b0W-k6-C4G" firstAttribute="leading" secondItem="Wfx-Yp-Lmn" secondAttribute="leading" constant="8" id="0vR-yk-max"/>
                             <constraint firstItem="SLm-Im-Ogc" firstAttribute="leading" secondItem="TR7-IG-1g2" secondAttribute="trailing" constant="83" id="6EY-Ls-lew"/>
+                            <constraint firstItem="GMi-Ho-h6K" firstAttribute="leading" secondItem="Wfx-Yp-Lmn" secondAttribute="leading" id="8hJ-47-c9H"/>
                             <constraint firstItem="V8O-C1-pKu" firstAttribute="leading" secondItem="8ZD-wz-Mho" secondAttribute="leading" id="AO7-YC-6lc"/>
                             <constraint firstItem="s8f-pb-dyH" firstAttribute="top" secondItem="2GM-wp-dDB" secondAttribute="bottom" constant="8" id="B6w-WB-Thc"/>
                             <constraint firstItem="8ZD-wz-Mho" firstAttribute="top" secondItem="2GM-wp-dDB" secondAttribute="bottom" constant="13" id="CAI-BL-rM9"/>
                             <constraint firstItem="ilo-jx-g4W" firstAttribute="top" secondItem="s8f-pb-dyH" secondAttribute="bottom" constant="8" id="EIL-70-Kg3"/>
                             <constraint firstItem="TR7-IG-1g2" firstAttribute="centerY" secondItem="SLm-Im-Ogc" secondAttribute="centerY" id="F4r-MA-ZCB"/>
-                            <constraint firstItem="EHk-cL-9Ug" firstAttribute="leading" secondItem="Wfx-Yp-Lmn" secondAttribute="leading" id="Hkm-ku-5EU"/>
                             <constraint firstItem="V8O-C1-pKu" firstAttribute="centerY" secondItem="ilo-jx-g4W" secondAttribute="centerY" id="I8k-sT-rAa"/>
-                            <constraint firstItem="EHk-cL-9Ug" firstAttribute="top" secondItem="SLm-Im-Ogc" secondAttribute="bottom" constant="8" id="KuW-dm-vFm"/>
                             <constraint firstAttribute="trailing" secondItem="s8f-pb-dyH" secondAttribute="trailing" constant="20" id="O2f-bm-boL"/>
-                            <constraint firstAttribute="trailing" secondItem="EHk-cL-9Ug" secondAttribute="trailing" id="OHF-ZE-azX"/>
                             <constraint firstItem="ilo-jx-g4W" firstAttribute="centerX" secondItem="s8f-pb-dyH" secondAttribute="centerX" id="Qmo-ca-WvB"/>
                             <constraint firstItem="ilo-jx-g4W" firstAttribute="leading" secondItem="s8f-pb-dyH" secondAttribute="leading" id="Tqg-in-Hda"/>
-                            <constraint firstItem="b0R-tX-nXQ" firstAttribute="top" secondItem="EHk-cL-9Ug" secondAttribute="bottom" id="URv-Ii-3b6"/>
+                            <constraint firstItem="GMi-Ho-h6K" firstAttribute="top" secondItem="SLm-Im-Ogc" secondAttribute="bottom" constant="8" id="V1y-zi-7uf"/>
+                            <constraint firstItem="b0W-k6-C4G" firstAttribute="top" secondItem="GMi-Ho-h6K" secondAttribute="bottom" constant="8" id="Wax-fx-FZj"/>
                             <constraint firstItem="SLm-Im-Ogc" firstAttribute="centerX" secondItem="ilo-jx-g4W" secondAttribute="centerX" id="Xhv-78-E00"/>
                             <constraint firstItem="8ZD-wz-Mho" firstAttribute="leading" secondItem="Wfx-Yp-Lmn" secondAttribute="leading" constant="20" id="Yoe-UZ-S9O"/>
+                            <constraint firstItem="b0R-tX-nXQ" firstAttribute="top" secondItem="b0W-k6-C4G" secondAttribute="bottom" constant="8" id="c3v-6o-hVI"/>
                             <constraint firstItem="ilo-jx-g4W" firstAttribute="trailing" secondItem="s8f-pb-dyH" secondAttribute="trailing" id="c7i-O1-X2V"/>
+                            <constraint firstAttribute="trailing" secondItem="b0W-k6-C4G" secondAttribute="trailing" constant="8" id="ckC-bK-kID"/>
                             <constraint firstItem="SLm-Im-Ogc" firstAttribute="leading" secondItem="ilo-jx-g4W" secondAttribute="leading" id="jdc-UW-Ilw"/>
                             <constraint firstItem="SLm-Im-Ogc" firstAttribute="trailing" secondItem="ilo-jx-g4W" secondAttribute="trailing" id="kNS-lU-0tX"/>
                             <constraint firstItem="TR7-IG-1g2" firstAttribute="leading" secondItem="V8O-C1-pKu" secondAttribute="leading" id="nq8-cM-tcb"/>
                             <constraint firstItem="ilo-jx-g4W" firstAttribute="leading" secondItem="V8O-C1-pKu" secondAttribute="trailing" constant="51" id="uBL-Ir-a1g"/>
+                            <constraint firstAttribute="trailing" secondItem="GMi-Ho-h6K" secondAttribute="trailing" id="wTu-f0-9si"/>
                             <constraint firstItem="SLm-Im-Ogc" firstAttribute="top" secondItem="ilo-jx-g4W" secondAttribute="bottom" constant="8" id="wfL-tB-Fm0"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="b0W-k6-C4G" id="c3x-xw-nXj"/>
                         <outlet property="companyLabel" destination="ilo-jx-g4W" id="epQ-lf-QFA"/>
                         <outlet property="emailLabel" destination="SLm-Im-Ogc" id="k0q-cz-DKE"/>
                         <outlet property="nameLabel" destination="s8f-pb-dyH" id="03e-Mx-iLR"/>
-                        <outlet property="tableView" destination="EHk-cL-9Ug" id="GXE-nf-r80"/>
+                        <outlet property="searchBar" destination="GMi-Ho-h6K" id="DCN-5o-Kcd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPR-SV-WNF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1598" y="1249"/>
+            <point key="canvasLocation" x="1597.65625" y="750"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bpp-gv-9GN">

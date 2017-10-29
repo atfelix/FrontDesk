@@ -9,7 +9,7 @@
 import UIKit
 import SKCore
 
-class DeliveryTableViewCell: UITableViewCell, SlackTableViewCell {
+class DeliveryTableViewCell: UITableViewCell, SlackCell {
 
     @IBOutlet weak var leftAtFrontDeskSwitch: UISwitch!
     @IBOutlet weak var signatureRequiredSwitch: UISwitch!

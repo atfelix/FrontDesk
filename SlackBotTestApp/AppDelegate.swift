@@ -24,7 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupAppearance() {
         self.window?.tintColor = .black
-        UISearchBar.appearance().barTintColor = .white
+        UISearchBar.appearance().barTintColor = .black
+        UISegmentedControl.appearance().tintColor = .white
+        let titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black]
+        UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributes, for: .selected)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self, UISearchBar.self]).tintColor = .white
         UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self, UISearchBar.self]).backgroundColor = .black
         UITextField.appearance(whenContainedInInstancesOf: [UISearchController.self, UISearchBar.self])

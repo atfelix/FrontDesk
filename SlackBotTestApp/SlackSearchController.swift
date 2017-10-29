@@ -10,7 +10,7 @@ import UIKit
 import SKCore
 import SKWebAPI
 
-protocol SlackTableViewCell {
+protocol SlackCell {
     var user: User? { get set }
     func displayCell()
 }
@@ -18,7 +18,7 @@ protocol SlackTableViewCell {
 protocol SlackViewController: class {
     var slackChannelManager: SlackChannelManager? { get set }
     var filteredUsers: [User]? { get set }
-    var searchController: SlackSearchController { get set }
+    var searchBar: SlackSearchBar! { get set }
 
     func filterContentForSearchText(searchText: String)
     func filterContentForScope(index: Int)
@@ -27,13 +27,13 @@ protocol SlackViewController: class {
 
 extension SlackViewController {
     func filterContentForSearchText(searchText: String) {
-        guard let filteredUsers = self.searchController.filter(content: self.filteredUsers, for: searchText) else { return }
+        guard let filteredUsers = self.slackChannelManager?.filtered(content: self.filteredUsers, for: searchText) else { return }
         self.filteredUsers = filteredUsers
     }
 
     func filterContentForScope(index: Int) {
         guard
-            let scopeButtons = self.searchController.searchBar.scopeButtonTitles,
+            let scopeButtons = self.searchBar.scopeButtonTitles,
             scopeButtons.startIndex <= index && index < scopeButtons.endIndex,
             let team = self.slackChannelManager?.slackTeam(for: scopeButtons[index]),
             let users = self.slackChannelManager?.users(for: team)
@@ -65,15 +65,18 @@ class SlackSearchController: UISearchController {
         self.searchBar.scopeButtonTitles = scopeButtonTitles
     }
 
-    private func setupSearchBarStyle(with tableView: UITableView, in navigationItem: UINavigationItem) {
+    func setupSearchController<T: UISearchResultsUpdating>(in viewController: T, with collectionView: UICollectionView, in navigationItem: UINavigationItem, with scopeButtonTitles: [String]?) {
+        self.searchResultsUpdater = viewController
+        self.setupSearchBarStyle(with: collectionView, in: navigationItem)
+        self.searchBar.scopeButtonTitles = scopeButtonTitles
+    }
+
+    private func setupSearchBarStyle(with view: UIView, in navigationItem: UINavigationItem) {
         self.dimsBackgroundDuringPresentation = false
         self.hidesNavigationBarDuringPresentation = false
 
         if #available(iOS 11.0, *) {
             navigationItem.searchController = self
-        }
-        else {
-            tableView.tableHeaderView = self.searchBar
         }
     }
 

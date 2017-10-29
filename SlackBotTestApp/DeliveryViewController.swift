@@ -11,6 +11,7 @@ import SKWebAPI
 
 class DeliveryViewController: UIViewController, SlackViewController {
 
+    var searchBar: SlackSearchBar!
     @IBOutlet weak var tableView: UITableView!
     var notifyButton: UIBarButtonItem!
     var searchController = SlackSearchController(searchResultsController: nil)
@@ -147,7 +148,7 @@ extension DeliveryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "DeliveryCell", for: indexPath) as! SlackTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: "DeliveryCell", for: indexPath) as! SlackCell
         cell.user = self.filteredUsers?[indexPath.row]
         cell.displayCell()
         return cell as! UITableViewCell

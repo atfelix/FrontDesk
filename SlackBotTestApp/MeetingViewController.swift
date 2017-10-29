@@ -11,13 +11,13 @@ import SKWebAPI
 
 class MeetingViewController: UIViewController, SlackViewController {
 
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var nameLabel: UITextField!
     @IBOutlet weak var companyLabel: UITextField!
     @IBOutlet weak var emailLabel: UITextField!
+    @IBOutlet weak var searchBar: SlackSearchBar!
+    @IBOutlet weak var collectionView: UICollectionView!
 
     var notifyButton: UIBarButtonItem!
-    var searchController = SlackSearchController(searchResultsController: nil)
 
     var slackChannelManager: SlackChannelManager? = nil
     var filteredUsers: [User]? = nil
@@ -56,14 +56,12 @@ class MeetingViewController: UIViewController, SlackViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.searchController.setupSearchController(in: self,
-                                                    with: self.tableView,
-                                                    in: self.navigationItem,
-                                                    with: self.slackChannelManager?.teams.map { $0.name })
-
         self.setupNavigationItem()
+        self.searchBar.scopeButtonTitles = self.slackChannelManager?.channels.map { $0.name }
+        self.searchBar.showsScopeBar = true
         self.definesPresentationContext = true
-        self.tableView.keyboardDismissMode = .interactive
+        self.collectionView.keyboardDismissMode = .interactive
+        self.collectionView.allowsMultipleSelection = true
         self.filterContentForScope(index: 0)
         self.setupDelegates()
         self.setupTags()
@@ -71,21 +69,16 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.registerKeyboardNotifications()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        self.searchController.isActive = true
-    }
-
     func notifyButtonTapped(_ sender: UIButton) {
-
+        print(self.collectionView.indexPathsForSelectedItems!)
         guard self.formIsValid() else {
             self.alertMeetingGoer()
             return
         }
 
-        let searchBar = self.searchController.searchBar
-
         guard
-            let indexPaths = self.tableView.indexPathsForSelectedRows,
+            let searchBar = self.searchBar,
+            let indexPaths = self.collectionView.indexPathsForSelectedItems,
             let scopeButtons = searchBar.scopeButtonTitles,
             let name = self.nameLabel.text,
             let company = self.companyLabel.text,
@@ -99,7 +92,7 @@ class MeetingViewController: UIViewController, SlackViewController {
 
         for indexPath in indexPaths {
             guard
-                let cell = self.tableView.cellForRow(at: indexPath) as? MeetingTableViewCell,
+                let cell = self.collectionView.cellForItem(at: indexPath) as? MeetingCollectionViewCell,
                 let user = cell.user
             else { continue }
 
@@ -130,7 +123,7 @@ class MeetingViewController: UIViewController, SlackViewController {
 
     func reloadData(criterion: Bool = true) {
         if criterion {
-            self.tableView.reloadData()
+            self.collectionView.reloadData()
         }
     }
 
@@ -142,7 +135,7 @@ class MeetingViewController: UIViewController, SlackViewController {
                 return false
         }
 
-        return (self.tableView.indexPathsForSelectedRows != nil
+        return (self.collectionView.indexPathsForSelectedItems != nil
             && !name.isEmpty && !email.isEmpty && String.isValid(email: email))
     }
 
@@ -156,7 +149,7 @@ class MeetingViewController: UIViewController, SlackViewController {
     }
 
     private func setupDelegates() {
-        self.searchController.searchBar.delegate = self
+        self.searchBar.delegate = self
         self.nameLabel.delegate = self
         self.companyLabel.delegate = self
         self.emailLabel.delegate = self
@@ -166,12 +159,12 @@ class MeetingViewController: UIViewController, SlackViewController {
         self.nameLabel.tag = 1
         self.companyLabel.tag = 2
         self.emailLabel.tag = 3
-        self.searchController.searchBar.tag = 4
+        self.searchBar.tag = 4
     }
 
     func determineFirstResponder() {
         if self.currentFocusIndex == 4 {
-            self.searchController.searchBar.becomeFirstResponder()
+            self.searchBar.becomeFirstResponder()
             return
         }
 
@@ -211,13 +204,13 @@ class MeetingViewController: UIViewController, SlackViewController {
         let keyboardSize = keyboardRect.size
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
 
-        self.tableView.contentInset = contentInsets
-        self.tableView.scrollIndicatorInsets = contentInsets
+        self.collectionView.contentInset = contentInsets
+        self.collectionView.scrollIndicatorInsets = contentInsets
     }
 
     func keyboardWillHide(_ notification: Notification) {
-        self.tableView.contentInset = UIEdgeInsets.zero
-        self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
+        self.collectionView.contentInset = UIEdgeInsets.zero
+        self.collectionView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
 
     private func alertMeetingGoer() {
@@ -229,25 +222,16 @@ class MeetingViewController: UIViewController, SlackViewController {
     }
 }
 
-
-extension MeetingViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension MeetingViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.filteredUsers?.count ?? 0
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MeetingCell", for: indexPath) as! MeetingTableViewCell
-        cell.user = self.filteredUsers?[indexPath.row]
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MeetingCell", for: indexPath) as! MeetingCollectionViewCell
+        cell.user = self.filteredUsers?[indexPath.item]
         cell.displayCell()
         return cell
-    }
-}
-
-extension MeetingViewController : UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        self.filterContentForSearchText(searchText: text)
     }
 }
 
