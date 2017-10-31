@@ -39,7 +39,9 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
     func notifyButtonTapped(_ sender: UIButton) {
 
-        guard self.collectionView.indexPathsForSelectedItems != nil
+        guard
+            let indexPaths = self.collectionView.indexPathsForSelectedItems,
+            !indexPaths.isEmpty
         else {
             self.alertLetterCarrier()
             return
@@ -47,7 +49,6 @@ class DeliveryViewController: UIViewController, SlackViewController {
 
         guard
             let searchBar = self.searchBar,
-            let indexPaths = self.collectionView.indexPathsForSelectedItems,
             let scopeButtons = searchBar.scopeButtonTitles,
             let team = self.slackChannelManager?.slackTeam(for: scopeButtons[searchBar.selectedScopeButtonIndex])
         else { return }
