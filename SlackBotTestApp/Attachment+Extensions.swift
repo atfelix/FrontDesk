@@ -9,34 +9,34 @@
 import SKCore
 
 extension Attachment {
-    static func regularDeliveryAttachment(for user: User, leftAtFrontDesk: Bool, signatureRequired: Bool) -> [Attachment]? {
+    static func regularDeliveryAttachment(for user: User) -> [Attachment]? {
         guard let userName = user.name else { return nil }
 
         return [Attachment(fallback: self.deliveryFallback(userName: userName),
                            title: nil,
                            colorHex: self.colorHex(),
                            pretext: self.deliveryPretext(userName: userName),
-                           fields: self.deliveryFields(leftAtFrontDesk: leftAtFrontDesk, signatureRequired: signatureRequired))]
+                           fields: self.deliveryFields())]
     }
 
-    static func awayDeliveryAttachement(for user: User, leftAtFrontDesk: Bool, signatureRequired: Bool, channel: String) -> [Attachment]? {
+    static func awayDeliveryAttachement(for user: User, channel: String) -> [Attachment]? {
         guard let userName = user.name else { return nil }
 
         return [Attachment(fallback: self.awayDeliveryFallback(userName: userName, channel: channel),
                            title: nil,
                            colorHex: self.colorHex(),
                            pretext: self.awayDeliveryPretext(userName: userName, channel: channel),
-                           fields: self.deliveryFields(leftAtFrontDesk: leftAtFrontDesk, signatureRequired: signatureRequired))]
+                           fields: self.deliveryFields())]
     }
 
-    static func dndDeliveryAttachement(for user: User, leftAtFrontDesk: Bool, signatureRequired: Bool, channel: String) -> [Attachment]? {
+    static func dndDeliveryAttachement(for user: User, channel: String) -> [Attachment]? {
         guard let userName = user.name else { return nil }
 
         return [Attachment(fallback: self.dndDeliveryFallback(userName: userName, channel: channel),
                            title: nil,
                            colorHex: self.colorHex(),
                            pretext: self.dndDeliveryPretext(userName: userName, channel: channel),
-                           fields: self.deliveryFields(leftAtFrontDesk: leftAtFrontDesk, signatureRequired: signatureRequired))]
+                           fields: self.deliveryFields())]
     }
 
     static func meetingAttachment(for user: User, name: String, from company: String, with email: String) -> [Attachment]? {
@@ -76,7 +76,7 @@ extension Attachment {
     }
 
     private static func deliveryFallback(userName: String) -> String {
-        return "Hey @\(userName), you have a parcel for delivery."
+        return "Hey @\(userName), you have a parcel for delivery at the front desk."
     }
 
     private static func meetingFallback(userName: String) -> String {
@@ -84,7 +84,7 @@ extension Attachment {
     }
 
     private static func awayDeliveryFallback(userName: String, channel: String) -> String {
-        return "Hey everybody, @\(userName) has a parcel delivery but is away."
+        return "Hey everybody, @\(userName) has a parcel delivery at the front desk but is away."
     }
 
     private static func awayMeetingFallback(userName: String, channel: String) -> String {
@@ -92,7 +92,7 @@ extension Attachment {
     }
 
     private static func dndDeliveryFallback(userName: String, channel: String) -> String {
-        return "Hey everybody, @\(userName) has a parcel delivery but doesn't want to be disturbed."
+        return "Hey everybody, @\(userName) has a parcel delivery at the front desk but doesn't want to be disturbed."
     }
 
     private static func dndMeetingFallback(userName: String, channel: String) -> String {
@@ -127,13 +127,8 @@ extension Attachment {
         return "#888888"
     }
 
-    private static func deliveryFields(leftAtFrontDesk: Bool, signatureRequired: Bool) -> [AttachmentField] {
-        return [AttachmentField(title: "Left at Front Desk",
-                                value: (leftAtFrontDesk) ? "Yes" : "No",
-                                short: true),
-                AttachmentField(title: "Needs Signature",
-                                value: (signatureRequired) ? "Yes" : "No",
-                                short: true)]
+    private static func deliveryFields() -> [AttachmentField] {
+        return []
     }
 
     private static func meetingFields(for name: String, from company: String, with email: String) -> [AttachmentField] {

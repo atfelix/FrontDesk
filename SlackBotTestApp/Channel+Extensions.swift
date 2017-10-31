@@ -11,7 +11,7 @@ import SKCore
 extension Channel {
     var defaultName: String {
         get {
-            return self.name ?? "# NO CHANNEL NAME"
+            return self.name ?? "{NO CHANNEL NAME}"
         }
     }
 }

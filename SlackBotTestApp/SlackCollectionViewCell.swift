@@ -1,16 +1,15 @@
 //
-//  MeetingCollectionViewCell.swift
+//  SlackCollectionViewCell.swift
 //  SlackBotTestApp
 //
-//  Created by atfelix on 2017-10-28.
+//  Created by atfelix on 2017-10-30.
 //  Copyright © 2017 Adam Felix. All rights reserved.
 //
 
 import UIKit
 import SKCore
 
-class MeetingCollectionViewCell: UICollectionViewCell, SlackCell {
-
+class SlackCollectionViewCell: UICollectionViewCell, SlackCell {
     @IBOutlet weak var nameLabel: UILabel!
     var user: User? = nil
 

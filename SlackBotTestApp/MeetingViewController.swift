@@ -56,6 +56,7 @@ class MeetingViewController: UIViewController, SlackViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.collectionView.register(UINib(nibName: "SlackCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlackCell")
         self.setupNavigationItem()
         self.searchBar.scopeButtonTitles = self.slackChannelManager?.channels.map { $0.name }
         self.searchBar.showsScopeBar = true
@@ -70,8 +71,8 @@ class MeetingViewController: UIViewController, SlackViewController {
     }
 
     func notifyButtonTapped(_ sender: UIButton) {
-        print(self.collectionView.indexPathsForSelectedItems!)
-        guard self.formIsValid() else {
+        guard self.formIsValid()
+        else {
             self.alertMeetingGoer()
             return
         }
@@ -84,15 +85,14 @@ class MeetingViewController: UIViewController, SlackViewController {
             let company = self.companyLabel.text,
             let email = self.emailLabel.text,
             !name.isEmpty && !email.isEmpty && String.isValid(email: email),
-            let team = self.slackChannelManager?.slackTeam(for: scopeButtons[searchBar.selectedScopeButtonIndex]) else {
-                return
-        }
+            let team = self.slackChannelManager?.slackTeam(for: scopeButtons[searchBar.selectedScopeButtonIndex])
+        else { return }
 
         var indexPathData = [User]()
 
         for indexPath in indexPaths {
             guard
-                let cell = self.collectionView.cellForItem(at: indexPath) as? MeetingCollectionViewCell,
+                let cell = self.collectionView.cellForItem(at: indexPath) as? SlackCollectionViewCell,
                 let user = cell.user
             else { continue }
 
@@ -228,7 +228,7 @@ extension MeetingViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MeetingCell", for: indexPath) as! MeetingCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SlackCell", for: indexPath) as! SlackCollectionViewCell
         cell.user = self.filteredUsers?[indexPath.item]
         cell.displayCell()
         return cell
@@ -250,7 +250,6 @@ extension MeetingViewController: UISearchBarDelegate {
                                searchText: String(searchText.characters.dropLast()))
             self.reloadData()
         }
-
         return true
     }
 
@@ -278,10 +277,6 @@ extension MeetingViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.currentFocusIndex += 1
         self.determineFirstResponder()
-        return true
-    }
-
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return true
     }
 }
